@@ -3,9 +3,9 @@ import { Prisma } from "@prisma/client"
 import dayjs from "dayjs"
 import { json, LoaderFunction, useLoaderData } from "remix"
 
+import { Search } from "~/components/Search"
 import { Column, Table } from "~/components/Table"
 import { Tile } from "~/components/Tile"
-import { Search } from "~/components/Search"
 import { getTableParams, TableParams } from "~/lib/table"
 import { db } from "~/prisma/db"
 
@@ -21,7 +21,7 @@ const getUsers = async ({ search, ...tableParams }: TableParams) => {
           ],
         }
       : undefined,
-    select: { id: true, firstName: true, email: true, createdAt: true },
+    select: { id: true, firstName: true, lastName: true, createdAt: true },
   })
   const count = await db.user.count()
   return { users, count }
@@ -30,7 +30,7 @@ const getUsers = async ({ search, ...tableParams }: TableParams) => {
 const TAKE = 10
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const data = await getUsers(getTableParams(request, TAKE))
+  const data = await getUsers(getTableParams(request, TAKE, { createdAt: Prisma.SortOrder.desc }))
   return json(data)
 }
 
@@ -52,13 +52,17 @@ export default function AdminIndex() {
           getRowHref={(user) => user.id}
           count={count}
         >
-          <Column<User> sortKey="firstName" header="Name" row={(user) => user.firstName} />
           <Column<User>
+            sortKey="firstName"
+            header="Name"
+            row={(user) => user.firstName + " " + user.lastName}
+          />
+          {/* <Column<User>
             sortKey="email"
             header="Email"
             d={{ base: "none", md: "flex" }}
             row={(user) => user.email}
-          />
+          /> */}
           <Column<User>
             sortKey="createdAt"
             header="Created"

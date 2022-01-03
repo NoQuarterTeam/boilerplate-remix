@@ -1,6 +1,7 @@
 import * as React from "react"
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg"
 import * as c from "@chakra-ui/react"
+import { Prisma } from "@prisma/client"
 import { Link as RLink, useSearchParams } from "remix"
 
 import { NoData } from "./NoData"
@@ -9,19 +10,13 @@ interface DataType {
   id: string
 }
 
-export enum SortOrder {
-  Asc = "asc",
-  Desc = "desc",
-}
-
-export type Sort = { orderBy: string; order: SortOrder.Asc | SortOrder.Desc }
+export type Sort = { orderBy: string; order: Prisma.SortOrder }
 
 interface Props<T extends DataType> {
   children:
     | ArrayLike<React.ReactElement<ColumnProps<T>> | undefined>
     | React.ReactElement<ColumnProps<T>>
     | undefined
-  isLoading?: boolean
   count?: number
   take?: number
   data?: T[]
@@ -34,7 +29,7 @@ export function Table<T extends DataType>(props: Props<T>) {
 
   const [params, setParams] = useSearchParams()
   const orderBy = params.get("orderBy") as string | undefined
-  const order = params.get("order") as SortOrder | undefined
+  const order = params.get("order") as Prisma.SortOrder | undefined
 
   const handleSort = (order: Sort) => {
     const existingParams = Object.fromEntries(params)
@@ -81,7 +76,7 @@ export function Table<T extends DataType>(props: Props<T>) {
                   sortKey
                     ? handleSort({
                         orderBy: sortKey,
-                        order: order === SortOrder.Desc ? SortOrder.Asc : SortOrder.Desc,
+                        order: order === Prisma.SortOrder.desc ? Prisma.SortOrder.asc : Prisma.SortOrder.desc,
                       })
                     : {}
                 }
@@ -89,9 +84,9 @@ export function Table<T extends DataType>(props: Props<T>) {
                 {header}
                 {orderBy && !!sortKey && orderBy === sortKey && (
                   <c.Center ml={2}>
-                    {order === SortOrder.Asc ? (
+                    {order === Prisma.SortOrder.asc ? (
                       <c.Box as={CgArrowLongUp} size="16px" m="-4px" />
-                    ) : order === SortOrder.Desc ? (
+                    ) : order === Prisma.SortOrder.desc ? (
                       <c.Box as={CgArrowLongDown} size="16px" m="-4px" />
                     ) : null}
                   </c.Center>
@@ -102,11 +97,7 @@ export function Table<T extends DataType>(props: Props<T>) {
         ))}
       </c.Flex>
 
-      {props.isLoading ? (
-        <c.Center p={10} h={100}>
-          <c.Spinner />
-        </c.Center>
-      ) : data.length > 0 ? (
+      {data.length > 0 ? (
         <c.Flex direction="column" justify="space-between" flexGrow={1}>
           {data.map((item) => (
             <Row key={item.id} hasHref={!!props.getRowHref}>

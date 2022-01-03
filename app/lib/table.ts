@@ -1,10 +1,10 @@
 import { Prisma } from "@prisma/client"
 
-export function getOrderByParams(request: Request) {
+export function getOrderByParams(request: Request, defaultOrder?: { [key: string]: Prisma.SortOrder }) {
   const url = new URL(request.url)
   const orderBy = url.searchParams.get("orderBy") || undefined
   const order = url.searchParams.get("order") || undefined
-  if (!orderBy || !order) return undefined
+  if (!orderBy || !order) return defaultOrder
   return getOrderBy(orderBy, order)
 }
 
@@ -41,12 +41,16 @@ export type TableParams = {
   skip?: number
   take?: number
   search?: string
-  orderBy?: Prisma.Enumerable<any>
+  orderBy?: { [key: string]: Prisma.SortOrder }
 }
 
-export function getTableParams(request: Request, take?: number) {
+export function getTableParams(
+  request: Request,
+  take?: number,
+  defaultOrder?: { [key: string]: Prisma.SortOrder },
+) {
   const pagination = getPaginationParams(request, take)
-  const orderBy = getOrderByParams(request)
+  const orderBy = getOrderByParams(request, defaultOrder)
   const search = getSearchParams(request)
   return { ...pagination, search, orderBy }
 }

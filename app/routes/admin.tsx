@@ -2,6 +2,7 @@ import * as React from "react"
 import { BiMoon, BiSun } from "react-icons/bi"
 import { CgAlbum, CgExternal, CgFileDocument, CgHome, CgUser } from "react-icons/cg"
 import * as c from "@chakra-ui/react"
+import { Role } from "@prisma/client"
 import { Form, json, LoaderFunction, NavLink, Outlet, useLoaderData } from "remix"
 
 import type { CurrentUser } from "~/services/auth/auth.service"
@@ -41,9 +42,11 @@ export default function AdminLayout() {
           <SidebarLink to="." end icon={<c.Box boxSize="18px" as={CgAlbum} />}>
             Dashboard
           </SidebarLink>
-          <SidebarLink to="users" icon={<c.Box boxSize="18px" as={CgUser} />}>
-            Users
-          </SidebarLink>
+          {user.role === Role.ADMIN && (
+            <SidebarLink to="users" icon={<c.Box boxSize="18px" as={CgUser} />}>
+              Users
+            </SidebarLink>
+          )}
           <SidebarLink to="posts" icon={<c.Box boxSize="18px" as={CgFileDocument} />}>
             Posts
           </SidebarLink>

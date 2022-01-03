@@ -16,7 +16,6 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react"
-import { Role } from "@prisma/client"
 import { Form, Link } from "remix"
 
 import { createImageUrl } from "~/lib/s3"
@@ -86,6 +85,7 @@ export function Nav(props: Props) {
               props.user ? (
                 <Avatar
                   size="sm"
+                  color="black"
                   boxSize="35px"
                   bg="purple.50"
                   src={createImageUrl(props.user.avatar)}
@@ -103,11 +103,11 @@ export function Nav(props: Props) {
                 <Link to="/profile">
                   <MenuItem icon={<Box as={BiUser} boxSize="16px" />}>Profile</MenuItem>
                 </Link>
-                {props.user.role === Role.ADMIN && (
-                  <Link to="/admin">
-                    <MenuItem icon={<Box as={BiCog} boxSize="16px" />}>Admin</MenuItem>
-                  </Link>
-                )}
+
+                <Link to="/admin">
+                  <MenuItem icon={<Box as={BiCog} boxSize="16px" />}>Admin</MenuItem>
+                </Link>
+
                 <MenuDivider />
                 <MenuItem
                   closeOnSelect={false}

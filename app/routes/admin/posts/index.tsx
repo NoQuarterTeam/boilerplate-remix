@@ -37,7 +37,7 @@ const getPosts = async ({ search, ...tableParams }: TableParams) => {
 const TAKE = 10
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const posts = await getPosts(getTableParams(request, TAKE))
+  const posts = await getPosts(getTableParams(request, TAKE, { createdAt: Prisma.SortOrder.desc }))
   return json(posts)
 }
 
