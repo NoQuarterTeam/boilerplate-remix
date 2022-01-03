@@ -1,18 +1,8 @@
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  Input,
-  Stack,
-} from "@chakra-ui/react"
-import { ActionFunction, Form, Link, LoaderFunction, redirect, useActionData, useTransition } from "remix"
+import * as c from "@chakra-ui/react"
+import { ActionFunction, Link, LoaderFunction, redirect, useActionData, useTransition } from "remix"
 import { z } from "zod"
 
+import { Form, FormError, FormField } from "~/components/Form"
 import { ActionData, validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
 import { createUserSession, getUser, register } from "~/services/auth/auth.service"
@@ -48,68 +38,38 @@ type RegisterInput = {
 
 export default function Register() {
   const { state } = useTransition()
-  const action = useActionData<ActionData<RegisterInput>>()
+  const form = useActionData<ActionData<RegisterInput>>()
+  const isSubmitting = state === "submitting"
   return (
-    <Center flexDir="column" pt={10}>
-      <Box w={["100%", 400]}>
-        <Form method="post">
-          <Stack spacing={3}>
-            <Heading as="h1">Register</Heading>
-            <FormControl isInvalid={!!action?.fieldErrors?.email}>
-              <FormLabel htmlFor="email">Email address</FormLabel>
-              <Input defaultValue={action?.data?.email} id="email" name="email" placeholder="jim@gmail.com" />
-              <FormErrorMessage>{action?.fieldErrors?.email?.[0]}</FormErrorMessage>
-            </FormControl>
-            <FormControl isInvalid={!!action?.fieldErrors?.password}>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <Input
-                defaultValue={action?.data?.password}
-                id="password"
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="********"
-              />
-              <FormErrorMessage>{action?.fieldErrors?.password?.[0]}</FormErrorMessage>
-            </FormControl>
-            <FormControl isInvalid={!!action?.fieldErrors?.firstName}>
-              <FormLabel htmlFor="firstName">First name</FormLabel>
-              <Input
-                defaultValue={action?.data?.firstName}
-                id="firstName"
-                name="firstName"
-                placeholder="Jim"
-              />
-              <FormErrorMessage>{action?.fieldErrors?.firstName?.[0]}</FormErrorMessage>
-            </FormControl>
-            <FormControl isInvalid={!!action?.fieldErrors?.lastName}>
-              <FormLabel htmlFor="lastName">Last name</FormLabel>
-              <Input defaultValue={action?.data?.lastName} id="lastName" name="lastName" placeholder="Sebe" />
-              <FormErrorMessage>{action?.fieldErrors?.lastName?.[0]}</FormErrorMessage>
-            </FormControl>
-
-            <Box>
-              <Button
+    <c.Center flexDir="column" pt={10}>
+      <c.Box w={["100%", 400]}>
+        <Form method="post" form={form}>
+          <c.Stack spacing={3}>
+            <c.Heading as="h1">Register</c.Heading>
+            <FormField isRequired label="Email address" name="email" placeholder="jim@gmail.com" />
+            <FormField isRequired label="Password" name="password" type="password" placeholder="********" />
+            <FormField isRequired label="First name" name="firstName" placeholder="Jim" />
+            <FormField isRequired label="Last name" name="lastName" placeholder="Bob" />
+            <c.Box>
+              <c.Button
                 colorScheme="purple"
                 type="submit"
                 isFullWidth
-                isDisabled={state === "submitting"}
-                isLoading={state === "submitting"}
+                isDisabled={isSubmitting}
+                isLoading={isSubmitting}
               >
                 Register
-              </Button>
-              <FormControl isInvalid={!!action?.formError}>
-                <FormErrorMessage>{action?.formError}</FormErrorMessage>
-              </FormControl>
-            </Box>
+              </c.Button>
+              <FormError />
+            </c.Box>
 
-            <Flex justify="space-between">
+            <c.Flex justify="space-between">
               <Link to="/login">Login</Link>
               <Link to="/forgot-password">Forgot password?</Link>
-            </Flex>
-          </Stack>
+            </c.Flex>
+          </c.Stack>
         </Form>
-      </Box>
-    </Center>
+      </c.Box>
+    </c.Center>
   )
 }

@@ -20,6 +20,10 @@ export const theme = extendTheme({
     FormLabel: {
       baseStyle: { mb: 0 },
     },
+    FormError: {
+      parts: ["text", "icon"],
+      baseStyle: { text: { mt: 1 } },
+    },
     Select,
     Textarea,
   },

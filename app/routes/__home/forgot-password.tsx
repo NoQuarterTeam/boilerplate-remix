@@ -1,8 +1,9 @@
 import * as React from "react"
 import * as c from "@chakra-ui/react"
-import { ActionFunction, Form, Link, useActionData, useTransition } from "remix"
+import { ActionFunction, Link, useActionData, useTransition } from "remix"
 import { z } from "zod"
 
+import { Form, FormError, FormField } from "~/components/Form"
 import { ActionData, validateFormData } from "~/lib/form"
 import { useToast } from "~/lib/hooks/useToast"
 import { badRequest } from "~/lib/remix"
@@ -23,7 +24,7 @@ type ResetInput = {
 export default function ForgotPassword() {
   const { state, type } = useTransition()
   const inputRef = React.useRef<HTMLInputElement>(null)
-  const action = useActionData<ActionData<ResetInput>>()
+  const form = useActionData<ActionData<ResetInput>>()
   const toast = useToast()
   React.useEffect(() => {
     if (type === "actionSubmission") {
@@ -33,32 +34,22 @@ export default function ForgotPassword() {
     }
   }, [type])
 
+  const isSubmitting = state === "submitting"
   return (
     <c.Center flexDir="column" pt={10}>
       <c.Box w={["100%", 400]}>
-        <Form method="post">
+        <Form method="post" form={form}>
           <c.Stack spacing={4}>
             <c.Heading as="h1">Forgot your password?</c.Heading>
             <c.Text>Enter your email below to receive your password reset instructions.</c.Text>
-
-            <c.FormControl isInvalid={!!action?.fieldErrors?.email}>
-              <c.FormLabel htmlFor="email">Email address</c.FormLabel>
-              <c.Input
-                ref={inputRef}
-                defaultValue={action?.data?.email}
-                id="email"
-                autoFocus
-                name="email"
-                placeholder="jim@gmail.com"
-              />
-              <c.FormErrorMessage>{action?.fieldErrors?.email?.[0]}</c.FormErrorMessage>
-            </c.FormControl>
+            <FormField isRequired label="Email address" name="email" placeholder="jim@gmail.com" />
+            <FormError />
             <c.Button
               isFullWidth
               colorScheme="purple"
               type="submit"
-              isDisabled={state === "submitting"}
-              isLoading={state === "submitting"}
+              isDisabled={isSubmitting}
+              isLoading={isSubmitting}
             >
               Send instructions
             </c.Button>

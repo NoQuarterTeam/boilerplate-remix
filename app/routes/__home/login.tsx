@@ -1,7 +1,6 @@
 import * as c from "@chakra-ui/react"
 import {
   ActionFunction,
-  Form,
   Link,
   LoaderFunction,
   redirect,
@@ -11,6 +10,7 @@ import {
 } from "remix"
 import { z } from "zod"
 
+import { Form, FormError, FormField } from "~/components/Form"
 import { ActionData, validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
 import { createUserSession, getUser, login } from "~/services/auth/auth.service"
@@ -44,51 +44,29 @@ type LoginInput = {
 
 export default function Login() {
   const { state } = useTransition()
-  const action = useActionData<ActionData<LoginInput>>()
+  const form = useActionData<ActionData<LoginInput>>()
   const [searchParams] = useSearchParams()
+  const isSubmitting = state === "submitting"
   return (
     <c.Center flexDir="column" pt={10}>
       <c.Box w={["100%", 400]}>
-        <Form method="post">
+        <Form method="post" form={form}>
           <c.Stack spacing={3}>
             <c.Heading as="h1">Login</c.Heading>
             <input type="hidden" name="redirectTo" value={searchParams.get("redirectTo") ?? undefined} />
-            <c.FormControl isInvalid={!!action?.fieldErrors?.email}>
-              <c.FormLabel htmlFor="email">Email address</c.FormLabel>
-              <c.Input
-                defaultValue={action?.data?.email}
-                id="email"
-                name="email"
-                placeholder="jim@gmail.com"
-              />
-              <c.FormErrorMessage>{action?.fieldErrors?.email?.[0]}</c.FormErrorMessage>
-            </c.FormControl>
-            <c.FormControl isInvalid={!!action?.fieldErrors?.password}>
-              <c.FormLabel htmlFor="password">Password</c.FormLabel>
-              <c.Input
-                defaultValue={action?.data?.password}
-                id="password"
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="********"
-              />
-              <c.FormErrorMessage>{action?.fieldErrors?.password?.[0]}</c.FormErrorMessage>
-            </c.FormControl>
-
+            <FormField isRequired label="Email address" name="email" placeholder="jim@gmail.com" />
+            <FormField isRequired label="Password" name="password" type="password" placeholder="********" />
             <c.Box>
               <c.Button
                 colorScheme="purple"
                 type="submit"
                 isFullWidth
-                isDisabled={state === "submitting"}
-                isLoading={state === "submitting"}
+                isDisabled={isSubmitting}
+                isLoading={isSubmitting}
               >
                 Login
               </c.Button>
-              <c.FormControl isInvalid={!!action?.formError}>
-                <c.FormErrorMessage>{action?.formError}</c.FormErrorMessage>
-              </c.FormControl>
+              <FormError />
             </c.Box>
 
             <c.Flex justify="space-between">

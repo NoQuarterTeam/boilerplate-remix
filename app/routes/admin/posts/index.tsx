@@ -7,6 +7,7 @@ import { LinkButton } from "~/components/LinkButton"
 import { Search } from "~/components/Search"
 import { Column, Table } from "~/components/Table"
 import { Tile } from "~/components/Tile"
+import { AwaitedFunction } from "~/lib/helpers/types"
 import { getTableParams, TableParams } from "~/lib/table"
 import { db } from "~/prisma/db"
 
@@ -41,7 +42,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json(posts)
 }
 
-type LoaderData = Awaited<ReturnType<typeof getPosts>>
+type LoaderData = AwaitedFunction<typeof getPosts>
 type Post = LoaderData["posts"][0]
 
 export default function Posts() {

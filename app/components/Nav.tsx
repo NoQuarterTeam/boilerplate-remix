@@ -1,22 +1,7 @@
 import { BiCog, BiExit, BiMoon, BiSun, BiUser } from "react-icons/bi"
 import { GiHamburgerMenu } from "react-icons/gi"
-import {
-  Avatar,
-  Box,
-  Button,
-  Fade,
-  HStack,
-  IconButton,
-  Link as CLink,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
-  useColorMode,
-  useColorModeValue,
-} from "@chakra-ui/react"
-import { Form, Link } from "remix"
+import * as c from "@chakra-ui/react"
+import { Link, useSubmit } from "remix"
 
 import { createImageUrl } from "~/lib/s3"
 import type { CurrentUser } from "~/services/auth/auth.service"
@@ -28,62 +13,63 @@ interface Props {
   user: CurrentUser | null
 }
 export function Nav(props: Props) {
-  const { colorMode, toggleColorMode } = useColorMode()
+  const submit = useSubmit()
+  const { colorMode, toggleColorMode } = c.useColorMode()
   const isDark = colorMode === "dark"
 
   return (
-    <Box
+    <c.Box
       w="100%"
       pos="fixed"
       top={0}
       left={0}
       borderBottom="1px solid"
-      borderColor={useColorModeValue("gray.100", "gray.700")}
+      borderColor={c.useColorModeValue("gray.100", "gray.700")}
       zIndex={500}
     >
       <Limiter
         display="flex"
         transition="200ms all"
         py={{ base: 4, md: 3 }}
-        bg={useColorModeValue("white", "gray.800")}
+        bg={c.useColorModeValue("white", "gray.800")}
         justifyContent="space-between"
         alignItems="center"
         w="100%"
       >
         {/* Left link list */}
-        <HStack spacing={8}>
-          <CLink fontWeight="bold" as={Link} to="/">
+        <c.HStack spacing={8}>
+          <c.Link fontWeight="bold" as={Link} to="/">
             Boilerplate
-          </CLink>
+          </c.Link>
           <Link to="/posts">Posts</Link>
-        </HStack>
+        </c.HStack>
 
         {/* Right link list */}
 
         {!props.user && (
-          <Fade in>
-            <HStack spacing={4} display={{ base: "none", md: "flex" }}>
+          <c.Fade in>
+            <c.HStack spacing={4} display={{ base: "none", md: "flex" }}>
               <LinkButton to="/login" variant="ghost">
                 Login
               </LinkButton>
               <LinkButton to="/register" variant="solid" colorScheme="purple">
                 Register
               </LinkButton>
-            </HStack>
-          </Fade>
+            </c.HStack>
+          </c.Fade>
         )}
 
         {/* Right menu list */}
-        <Menu placement="bottom-end" closeOnSelect closeOnBlur>
-          <MenuButton
-            as={IconButton}
+        <c.Menu placement="bottom-end" closeOnSelect closeOnBlur>
+          <c.MenuButton
+            as={c.IconButton}
             display={{ base: "flex", md: props.user ? "flex" : "none" }}
             p={0}
             colorScheme={props.user ? "gray" : undefined}
             borderRadius="full"
             icon={
               props.user ? (
-                <Avatar
+                <c.Avatar
                   size="sm"
                   color="black"
                   boxSize="35px"
@@ -92,59 +78,60 @@ export function Nav(props: Props) {
                   name={props.user.firstName}
                 />
               ) : (
-                <Box as={GiHamburgerMenu} />
+                <c.Box as={GiHamburgerMenu} />
               )
             }
           />
 
-          <MenuList fontSize="md">
+          <c.MenuList fontSize="md">
             {props.user ? (
               <>
                 <Link to="/profile">
-                  <MenuItem icon={<Box as={BiUser} boxSize="16px" />}>Profile</MenuItem>
+                  <c.MenuItem icon={<c.Box as={BiUser} boxSize="16px" />}>Profile</c.MenuItem>
                 </Link>
 
                 <Link to="/admin">
-                  <MenuItem icon={<Box as={BiCog} boxSize="16px" />}>Admin</MenuItem>
+                  <c.MenuItem icon={<c.Box as={BiCog} boxSize="16px" />}>Admin</c.MenuItem>
                 </Link>
 
-                <MenuDivider />
-                <MenuItem
+                <c.MenuDivider />
+                <c.MenuItem
                   closeOnSelect={false}
-                  icon={<Box as={isDark ? BiSun : BiMoon} boxSize="16px" />}
+                  icon={<c.Box as={isDark ? BiSun : BiMoon} boxSize="16px" />}
                   onClick={toggleColorMode}
                 >
                   Toggle theme
-                </MenuItem>
-                <MenuDivider />
+                </c.MenuItem>
+                <c.MenuDivider />
 
-                <Form action="/logout" method="post">
-                  <Button type="submit" isFullWidth variant="ghost" icon={<Box as={BiExit} boxSize="16px" />}>
-                    Logout
-                  </Button>
-                </Form>
+                <c.MenuItem
+                  onClick={() => submit(null, { method: "post", action: "/logout" })}
+                  icon={<c.Box as={BiExit} boxSize="16px" />}
+                >
+                  Logout
+                </c.MenuItem>
               </>
             ) : (
               <>
-                <MenuItem
+                <c.MenuItem
                   closeOnSelect={false}
-                  icon={<Box as={isDark ? BiSun : BiMoon} boxSize="16px" />}
+                  icon={<c.Box as={isDark ? BiSun : BiMoon} boxSize="16px" />}
                   onClick={toggleColorMode}
                 >
                   Toggle theme
-                </MenuItem>
-                <MenuDivider />
+                </c.MenuItem>
+                <c.MenuDivider />
                 <Link to="/login">
-                  <MenuItem>Login</MenuItem>
+                  <c.MenuItem>Login</c.MenuItem>
                 </Link>
                 <Link to="/register">
-                  <MenuItem fontWeight="semibold">Register</MenuItem>
+                  <c.MenuItem fontWeight="semibold">Register</c.MenuItem>
                 </Link>
               </>
             )}
-          </MenuList>
-        </Menu>
+          </c.MenuList>
+        </c.Menu>
       </Limiter>
-    </Box>
+    </c.Box>
   )
 }

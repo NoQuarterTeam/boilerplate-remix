@@ -26,9 +26,18 @@ model User {
   updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(6)
 }
 
+enum PostType {
+  FUNNY
+  TECH
+  RANDOM
+  NEWS
+  SERIOUS
+}
+
 model Post {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title       String
+  type        PostType @default(FUNNY)
   description String
   author      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now()) @db.Timestamptz(6)

@@ -1,7 +1,10 @@
+import * as React from "react"
 import * as c from "@chakra-ui/react"
-import { ActionFunction, Form, redirect, useActionData, useTransition } from "remix"
+import { PostType } from "@prisma/client"
+import { ActionFunction, redirect, useActionData, useTransition } from "remix"
 import { z } from "zod"
 
+import { Form, FormError,FormField } from "~/components/Form"
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
 import { ActionData, validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
@@ -9,7 +12,11 @@ import { db } from "~/prisma/db"
 import { getCurrentUser } from "~/services/auth/auth.service"
 
 export const action: ActionFunction = async ({ request }) => {
-  const postSchema = z.object({ title: z.string().min(1), description: z.string().min(1) })
+  const postSchema = z.object({
+    title: z.string().min(1, { message: "Required" }),
+    description: z.string().min(1, { message: "Required" }),
+    type: z.nativeEnum(PostType, { errorMap: () => ({ message: "Invalid option" }) }),
+  })
   const formData = await request.formData()
   const { data, fieldErrors } = await validateFormData(postSchema, formData)
   const user = await getCurrentUser(request)
@@ -20,51 +27,69 @@ export const action: ActionFunction = async ({ request }) => {
 
 type PostInput = {
   title: string
+  type: PostType
   description: string
 }
+const POST_TYPE_OPTIONS: { label: string; value: PostType }[] = [
+  { value: PostType.FUNNY, label: "Funny" },
+  { value: PostType.SERIOUS, label: "Serious" },
+  { value: PostType.NEWS, label: "News" },
+  { value: PostType.RANDOM, label: "Random" },
+  { value: PostType.TECH, label: "Tech" },
+]
 
 export default function NewPost() {
-  const action = useActionData<ActionData<PostInput>>()
+  const form = useActionData<ActionData<PostInput>>()
+  const [isDirty, setIsDirty] = React.useState(false)
   const { state } = useTransition()
   const isSubmitting = state === "submitting"
+
   return (
     <c.Stack spacing={4}>
       <c.Flex justify="space-between">
         <c.Heading>New post</c.Heading>
       </c.Flex>
 
-      <Tile>
-        <Form method="post">
+      <Form
+        method="post"
+        form={form}
+        onChange={(e) => {
+          const formData = new FormData(e.currentTarget)
+          const data = Object.fromEntries(formData)
+          const isDirty = Object.values(data).some((val) => !!val)
+          setIsDirty(isDirty)
+        }}
+      >
+        <Tile>
           <TileHeader>
             <TileHeading>Info</TileHeading>
           </TileHeader>
           <TileBody>
             <c.Stack spacing={4}>
-              <c.FormControl isInvalid={!!action?.fieldErrors?.title}>
-                <c.FormLabel htmlFor="email">Title</c.FormLabel>
-                <c.Input defaultValue={action?.data?.title} id="title" name="title" placeholder="My post" />
-                <c.FormErrorMessage>{action?.fieldErrors?.title?.[0]}</c.FormErrorMessage>
-              </c.FormControl>
-              <c.FormControl isInvalid={!!action?.fieldErrors?.description}>
-                <c.FormLabel htmlFor="description">Description</c.FormLabel>
-                <c.Textarea
-                  defaultValue={action?.data?.description}
-                  id="description"
-                  name="description"
-                  placeholder="Cool"
-                />
-                <c.FormErrorMessage>{action?.fieldErrors?.description?.[0]}</c.FormErrorMessage>
-              </c.FormControl>
-              <c.FormControl isInvalid={!!action?.formError}>
-                <c.FormErrorMessage>{action?.formError}</c.FormErrorMessage>
-              </c.FormControl>
+              <FormField name="title" label="Title" placeholder="My post" min={1} />
+              <FormField name="description" label="Description" input={<c.Textarea rows={6} />} />
+              <FormField
+                name="type"
+                label="Type"
+                placeholder="Select type"
+                input={
+                  <c.Select>
+                    {POST_TYPE_OPTIONS.map(({ value, label }) => (
+                      <option value={value} key={value}>
+                        {label}
+                      </option>
+                    ))}
+                  </c.Select>
+                }
+              />
+              <FormError />
             </c.Stack>
           </TileBody>
           <TileFooter>
             <c.ButtonGroup>
               <c.Button
                 type="submit"
-                isDisabled={isSubmitting}
+                isDisabled={isSubmitting || !isDirty}
                 isLoading={isSubmitting}
                 colorScheme="purple"
                 size="sm"
@@ -73,8 +98,8 @@ export default function NewPost() {
               </c.Button>
             </c.ButtonGroup>
           </TileFooter>
-        </Form>
-      </Tile>
+        </Tile>
+      </Form>
     </c.Stack>
   )
 }

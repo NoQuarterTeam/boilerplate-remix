@@ -5,6 +5,7 @@ import relativeTime from "dayjs/plugin/relativeTime"
 import { HeadersFunction, json, LoaderFunction, MetaFunction, useLoaderData } from "remix"
 
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
+import { AwaitedFunction } from "~/lib/helpers/types"
 import { createImageUrl } from "~/lib/s3"
 import { db } from "~/prisma/db"
 
@@ -35,7 +36,7 @@ export const loader: LoaderFunction = async () => {
   const posts = await getPosts()
   return json(posts)
 }
-type LoaderData = Awaited<ReturnType<typeof getPosts>>
+type LoaderData = AwaitedFunction<typeof getPosts>
 
 export default function Posts() {
   const { posts } = useLoaderData<LoaderData>()

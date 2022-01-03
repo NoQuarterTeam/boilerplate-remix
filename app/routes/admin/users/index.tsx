@@ -1,11 +1,15 @@
+import * as React from "react"
+import { CgSoftwareDownload, CgUserAdd } from "react-icons/cg"
 import * as c from "@chakra-ui/react"
 import { Prisma } from "@prisma/client"
 import dayjs from "dayjs"
 import { json, LoaderFunction, useLoaderData } from "remix"
 
+import { PartialCheckIcon } from "~/components/PartialCheckIcon"
 import { Search } from "~/components/Search"
 import { Column, Table } from "~/components/Table"
 import { Tile } from "~/components/Tile"
+import { AwaitedFunction } from "~/lib/helpers/types"
 import { getTableParams, TableParams } from "~/lib/table"
 import { db } from "~/prisma/db"
 
@@ -34,16 +38,53 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json(data)
 }
 
-type LoaderData = Awaited<ReturnType<typeof getUsers>>
+type LoaderData = AwaitedFunction<typeof getUsers>
 type User = LoaderData["users"][0]
 
 export default function AdminIndex() {
   const { users, count } = useLoaderData<LoaderData>()
+  const [selectedUsers, setSelectedUsers] = React.useState<string[]>([])
+  const toggleSelected = (userId: string) => {
+    if (selectedUsers.includes(userId)) {
+      setSelectedUsers((selected) => selected.filter((d) => d !== userId))
+    } else {
+      setSelectedUsers((selected) => [...selected, userId])
+    }
+  }
+  const toggleAll = () => {
+    if (selectedUsers.length > 0) {
+      setSelectedUsers([])
+    } else if (users) {
+      setSelectedUsers(users.map((user) => user.id))
+    }
+  }
+
+  const isPartialSelection = !!users && selectedUsers.length > 0 && selectedUsers.length < users.length
 
   return (
     <c.Stack spacing={4}>
       <c.Heading>Users</c.Heading>
-      <Search placeholder="Search users" />
+      <c.HStack>
+        <Search placeholder="Search users" />
+        <c.Button
+          display={{ base: "none", md: "flex" }}
+          leftIcon={<c.Box boxSize="20px" as={CgSoftwareDownload} />}
+        >
+          Download
+        </c.Button>
+        <c.Button
+          display={{ base: "none", md: "flex" }}
+          colorScheme="purple"
+          leftIcon={<c.Box boxSize="18px" as={CgUserAdd} />}
+        >
+          Create user
+        </c.Button>
+        {selectedUsers.length > 0 && (
+          <c.Button display={{ base: "none", md: "flex" }} variant="ghost">
+            {selectedUsers.length} selected
+          </c.Button>
+        )}
+      </c.HStack>
       <Tile>
         <Table
           take={TAKE}
@@ -52,6 +93,29 @@ export default function AdminIndex() {
           getRowHref={(user) => user.id}
           count={count}
         >
+          <Column<User>
+            hasNoLink
+            display={{ base: "none", md: "flex" }}
+            maxW="30px"
+            header={
+              <c.Checkbox
+                colorScheme="purple"
+                zIndex={100}
+                isChecked={count > 0 && selectedUsers.length > 0}
+                onChange={toggleAll}
+                iconColor="white"
+                {...(isPartialSelection && { icon: <PartialCheckIcon color="white" /> })}
+              />
+            }
+            row={(user) => (
+              <c.Checkbox
+                colorScheme="purple"
+                isChecked={selectedUsers.includes(user.id)}
+                iconColor="white"
+                onChange={() => toggleSelected(user.id)}
+              />
+            )}
+          />
           <Column<User>
             sortKey="firstName"
             header="Name"

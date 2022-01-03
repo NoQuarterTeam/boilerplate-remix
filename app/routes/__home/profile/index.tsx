@@ -3,7 +3,6 @@ import { BiTrash } from "react-icons/bi"
 import * as c from "@chakra-ui/react"
 import {
   ActionFunction,
-  Form,
   json,
   LoaderFunction,
   MetaFunction,
@@ -15,16 +14,17 @@ import {
 } from "remix"
 import { z } from "zod"
 
+import { Form, FormError, FormField } from "~/components/Form"
 import { ImageUploader } from "~/components/ImageUploader"
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
-import { ActionData, validateFormData } from "~/lib/form"
+import { ActionData, shallowEqual, validateFormData } from "~/lib/form"
 import { useToast } from "~/lib/hooks/useToast"
 import { badRequest } from "~/lib/remix"
+import { createImageUrl } from "~/lib/s3"
 import { UPLOAD_PATHS } from "~/lib/uploadPaths"
 import type { CurrentUser } from "~/services/auth/auth.service"
 import { getCurrentUser, requireUser } from "~/services/auth/auth.service"
 import { updateUser } from "~/services/user/user.service"
-import { createImageUrl } from "~/lib/s3"
 
 export const meta: MetaFunction = () => {
   return { title: "Profile" }
@@ -65,14 +65,21 @@ type ProfileInput = {
 
 export default function Profile() {
   const uploader = useFetcher()
+  const formRef = React.useRef<HTMLFormElement>(null)
   const user = useLoaderData<CurrentUser>()
   const toast = useToast()
-  const action = useActionData<ActionData<ProfileInput>>()
+
+  const form = useActionData<ActionData<ProfileInput>>()
+  const [isDirty, setIsDirty] = React.useState(false)
   const { state, type } = useTransition()
 
   React.useEffect(() => {
-    if (type === "actionRedirect" || type === "fetchActionRedirect") {
+    if (type === "actionRedirect") {
       toast({ description: "Profile updated", status: "success" })
+      setIsDirty(false)
+    }
+    if (type === "fetchActionRedirect") {
+      toast({ description: "Avatar updated", status: "success" })
     }
   }, [type])
 
@@ -80,65 +87,70 @@ export default function Profile() {
     uploader.submit({ avatar }, { method: "post", action: "/profile?index" })
   }
   const isSubmitting = state === "submitting"
+
   return (
     <c.Stack spacing={6}>
-      <Tile>
-        <Form method="post">
+      <Form
+        ref={formRef}
+        method="post"
+        form={form}
+        onChange={(e) => {
+          const formData = new FormData(e.currentTarget)
+          const data = Object.fromEntries(formData) as Record<string, string>
+          const { firstName, lastName, email } = user
+          const isDirty = !shallowEqual({ firstName, lastName, email }, data)
+          setIsDirty(isDirty)
+        }}
+      >
+        <Tile>
           <TileHeader>
             <TileHeading>Info</TileHeading>
           </TileHeader>
           <TileBody>
             <c.Stack spacing={4} maxW="300px">
-              <c.FormControl isInvalid={!!action?.fieldErrors?.email}>
-                <c.FormLabel htmlFor="email">Email address</c.FormLabel>
-                <c.Input
-                  defaultValue={action?.data?.email || user.email}
-                  id="email"
-                  name="email"
-                  placeholder="jim@gmail.com"
-                />
-                <c.FormErrorMessage>{action?.fieldErrors?.email?.[0]}</c.FormErrorMessage>
-              </c.FormControl>
-              <c.FormControl isInvalid={!!action?.fieldErrors?.firstName}>
-                <c.FormLabel htmlFor="firstName">First name</c.FormLabel>
-                <c.Input
-                  defaultValue={action?.data?.firstName || user.firstName}
-                  id="firstName"
-                  name="firstName"
-                  placeholder="Jim"
-                />
-                <c.FormErrorMessage>{action?.fieldErrors?.firstName?.[0]}</c.FormErrorMessage>
-              </c.FormControl>
-              <c.FormControl isInvalid={!!action?.fieldErrors?.lastName}>
-                <c.FormLabel htmlFor="lastName">Last name</c.FormLabel>
-                <c.Input
-                  defaultValue={action?.data?.lastName || user.lastName}
-                  id="lastName"
-                  name="lastName"
-                  placeholder="Sebe"
-                />
-                <c.FormErrorMessage>{action?.fieldErrors?.lastName?.[0]}</c.FormErrorMessage>
-              </c.FormControl>
-              <c.FormControl isInvalid={!!action?.formError}>
-                <c.FormErrorMessage>{action?.formError}</c.FormErrorMessage>
-              </c.FormControl>
+              <FormField
+                label="Email address"
+                defaultValue={user.email}
+                name="email"
+                placeholder="jim@gmail.com"
+              />
+              <FormField
+                label="First name"
+                defaultValue={user.firstName}
+                name="firstName"
+                placeholder="Jim"
+              />
+              <FormField label="Last name" defaultValue={user.lastName} name="lastName" placeholder="Sebe" />
+              <FormError />
             </c.Stack>
           </TileBody>
           <TileFooter>
             <c.ButtonGroup>
               <c.Button
                 type="submit"
-                isDisabled={isSubmitting}
+                isDisabled={!isDirty || isSubmitting}
                 isLoading={isSubmitting}
                 colorScheme="purple"
                 size="sm"
               >
                 Update
               </c.Button>
+              {isDirty && (
+                <c.Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    formRef.current?.reset()
+                    setIsDirty(false)
+                  }}
+                >
+                  Cancel
+                </c.Button>
+              )}
             </c.ButtonGroup>
           </TileFooter>
-        </Form>
-      </Tile>
+        </Tile>
+      </Form>
       <Tile>
         <TileHeader>
           <TileHeading>Avatar</TileHeading>

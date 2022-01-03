@@ -1,13 +1,16 @@
 import { Avatar, Box, Flex, Heading, Stack, Text } from "@chakra-ui/react"
 import { json, LoaderFunction, useLoaderData } from "remix"
 
+import { AwaitedFunction } from "~/lib/helpers/types"
 import { createImageUrl } from "~/lib/s3"
-
 import { db } from "~/prisma/db"
 
 const getUser = async (id?: string) => {
   if (!id) throw new Response("ID required", { status: 400 })
-  const user = await db.user.findUnique({ where: { id } })
+  const user = await db.user.findUnique({
+    where: { id },
+    select: { id: true, avatar: true, firstName: true, email: true },
+  })
   if (!user) throw new Response("Not Found", { status: 404 })
   return { user }
 }
@@ -17,7 +20,7 @@ export const loader: LoaderFunction = async ({ params: { id } }) => {
   return json(data)
 }
 
-type LoaderData = Awaited<ReturnType<typeof getUser>>
+type LoaderData = AwaitedFunction<typeof getUser>
 
 export default function UserDetail() {
   const { user } = useLoaderData<LoaderData>()
