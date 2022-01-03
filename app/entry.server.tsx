@@ -3,6 +3,7 @@ import { CacheProvider } from "@emotion/react"
 import createEmotionServer from "@emotion/server/create-instance"
 import type { EntryContext } from "remix"
 import { RemixServer } from "remix"
+import "dotenv/config"
 
 import { ServerStyleContext } from "~/lib/emotion/context"
 import { createEmotionCache } from "~/lib/emotion/createEmotionCache"
