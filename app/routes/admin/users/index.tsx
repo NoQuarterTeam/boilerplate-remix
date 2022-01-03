@@ -21,7 +21,7 @@ const getUsers = async ({ search, ...tableParams }: TableParams) => {
           ],
         }
       : undefined,
-    select: { id: true, firstName: true, lastName: true, createdAt: true },
+    select: { id: true, firstName: true, lastName: true, email: true, createdAt: true },
   })
   const count = await db.user.count()
   return { users, count }
@@ -57,12 +57,12 @@ export default function AdminIndex() {
             header="Name"
             row={(user) => user.firstName + " " + user.lastName}
           />
-          {/* <Column<User>
+          <Column<User>
             sortKey="email"
             header="Email"
             d={{ base: "none", md: "flex" }}
             row={(user) => user.email}
-          /> */}
+          />
           <Column<User>
             sortKey="createdAt"
             header="Created"
