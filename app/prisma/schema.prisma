@@ -30,7 +30,7 @@ model Post {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title       String
   description String
-  author      User     @relation(fields: [userId], references: [id])
+  author      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now()) @db.Timestamptz(6)
   updatedAt   DateTime @default(now()) @updatedAt @db.Timestamptz(6)
   userId      String   @db.Uuid
