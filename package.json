@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "remix dev",
     "build": "remix build",
+    "generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
     "postinstall": "remix setup node",
     "start": "remix-serve ./api/_build",
     "db:push": "prisma db push",
