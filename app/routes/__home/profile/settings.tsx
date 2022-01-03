@@ -12,14 +12,20 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react"
-import { LoaderFunction } from "remix"
+import { ActionFunction, Form, LoaderFunction, redirect } from "remix"
 
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
-import { requireUser } from "~/services/auth/auth.service"
+import { db } from "~/prisma/db"
+import { getCurrentUser, requireUser } from "~/services/auth/auth.service"
 
 export const loader: LoaderFunction = async ({ request }) => {
   await requireUser(request)
   return {}
+}
+export const action: ActionFunction = async ({ request }) => {
+  const user = await getCurrentUser(request)
+  await db.user.delete({ where: { id: user.id } })
+  return redirect("/")
 }
 
 export default function Settings() {
@@ -41,13 +47,7 @@ export default function Settings() {
         </TileBody>
         <TileFooter>
           <Flex w="100%" justify="flex-end">
-            <Button
-              size="sm"
-              colorScheme="red"
-              // isDisabled={destroyLoading}
-              // isLoading={destroyLoading}
-              onClick={alertProps.onOpen}
-            >
+            <Button size="sm" colorScheme="red" onClick={alertProps.onOpen}>
               Delete account
             </Button>
           </Flex>
@@ -67,15 +67,11 @@ export default function Settings() {
                   <Button ref={cancelRef} onClick={alertProps.onClose}>
                     Cancel
                   </Button>
-                  <Button
-                    colorScheme="red"
-                    // onClick={handleDestroy}
-                    // isLoading={destroyLoading}
-                    // isDisabled={destroyLoading}
-                    ml={3}
-                  >
-                    Delete
-                  </Button>
+                  <Form method="post">
+                    <Button colorScheme="red" type="submit" ml={3}>
+                      Delete
+                    </Button>
+                  </Form>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialogOverlay>

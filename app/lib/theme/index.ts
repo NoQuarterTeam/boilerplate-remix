@@ -17,6 +17,9 @@ export const theme = extendTheme({
   components: {
     Button,
     Input,
+    FormLabel: {
+      baseStyle: { mb: 0 },
+    },
     Select,
     Textarea,
   },

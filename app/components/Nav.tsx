@@ -19,11 +19,11 @@ import {
 import { Role } from "@prisma/client"
 import { Form, Link } from "remix"
 
+import { createImageUrl } from "~/lib/s3"
 import type { CurrentUser } from "~/services/auth/auth.service"
 
 import { Limiter } from "./Limiter"
 import { LinkButton } from "./LinkButton"
-import { createImageUrl } from "~/lib/s3"
 
 interface Props {
   user: CurrentUser | null
@@ -87,8 +87,7 @@ export function Nav(props: Props) {
                 <Avatar
                   size="sm"
                   boxSize="35px"
-                  colorScheme="purple"
-                  bg="purple.500"
+                  bg="purple.50"
                   src={createImageUrl(props.user.avatar)}
                   name={props.user.firstName}
                 />
