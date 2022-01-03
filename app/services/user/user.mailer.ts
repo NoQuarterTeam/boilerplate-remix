@@ -3,7 +3,7 @@ import * as Sentry from "@sentry/node"
 
 import { FULL_WEB_URL, mailer } from "~/lib/config.server"
 
-export async function sendResetPassword(user: User, token: string) {
+export async function sendResetPasswordEmail(user: User, token: string) {
   try {
     if (!user.email) return
     await mailer.send({
@@ -18,7 +18,7 @@ export async function sendResetPassword(user: User, token: string) {
   }
 }
 
-export async function sendPasswordChanged(user: User) {
+export async function sendPasswordChangedEmail(user: User) {
   try {
     if (!user.email) return
     await mailer.send({

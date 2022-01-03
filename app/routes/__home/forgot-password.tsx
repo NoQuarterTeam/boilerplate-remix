@@ -47,6 +47,7 @@ export default function ForgotPassword() {
                 ref={inputRef}
                 defaultValue={action?.data?.email}
                 id="email"
+                autoFocus
                 name="email"
                 placeholder="jim@gmail.com"
               />

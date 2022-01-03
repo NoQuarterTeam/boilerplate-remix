@@ -5,7 +5,7 @@ import { IS_PRODUCTION, SESSION_SECRET } from "~/lib/config.server"
 import { createToken, decryptToken } from "~/lib/jwt"
 import { db } from "~/prisma/db"
 
-import { sendPasswordChanged, sendResetPassword } from "../user/user.mailer"
+import { sendPasswordChangedEmail, sendResetPasswordEmail } from "../user/user.mailer"
 import { comparePasswords, hashPassword } from "./password.server"
 
 export async function login({ email, password }: { email: string; password: string }) {
@@ -20,7 +20,7 @@ export async function sendResetPasswordLink({ email }: { email: string }) {
   const user = await db.user.findUnique({ where: { email } })
   if (user) {
     const token = createToken({ id: user.id })
-    sendResetPassword(user, token)
+    await sendResetPasswordEmail(user, token)
   }
   return true
 }
@@ -30,7 +30,7 @@ export async function resetPassword({ token, password }: { token: string; passwo
     const payload = decryptToken<{ id: string }>(token)
     const hashedPassword = await hashPassword(password)
     const user = await db.user.update({ where: { id: payload.id }, data: { password: hashedPassword } })
-    await sendPasswordChanged(user)
+    await sendPasswordChangedEmail(user)
     return true
   } catch (error) {
     return false
