@@ -19,9 +19,6 @@ if (process.env.NODE_ENV === "production") {
     global.__db.$connect()
   }
   db = global.__db
-}
-
-if (process.env.NODE_ENV !== "production") {
   db?.$on("beforeExit", () => {
     process.exit(0)
   })
