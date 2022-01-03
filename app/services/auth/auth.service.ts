@@ -1,9 +1,10 @@
 import type { Prisma, User } from "@prisma/client"
-
 import { createCookieSessionStorage, redirect } from "remix"
-import { SESSION_SECRET } from "~/lib/config.server"
+
+import { IS_PRODUCTION, SESSION_SECRET } from "~/lib/config.server"
 import { createToken, decryptToken } from "~/lib/jwt"
 import { db } from "~/prisma/db"
+
 import { sendPasswordChanged, sendResetPassword } from "../user/user.mailer"
 import { comparePasswords, hashPassword } from "./password.server"
 
@@ -48,7 +49,7 @@ export async function register(data: Prisma.UserCreateInput) {
 const storage = createCookieSessionStorage({
   cookie: {
     name: "boilerplate_session",
-    secure: process.env.NODE_ENV === "production",
+    secure: IS_PRODUCTION,
     secrets: [SESSION_SECRET],
     sameSite: "lax",
     path: "/",

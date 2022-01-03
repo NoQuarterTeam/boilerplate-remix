@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client"
 
-let db: PrismaClient
+export let db: PrismaClient
 
 declare global {
   // eslint-disable-next-line no-var
@@ -19,9 +19,7 @@ if (process.env.NODE_ENV === "production") {
     global.__db.$connect()
   }
   db = global.__db
+  db?.$on("beforeExit", () => {
+    process.exit(0)
+  })
 }
-db?.$on("beforeExit", () => {
-  process.exit(0)
-})
-
-export { db }
