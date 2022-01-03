@@ -14,7 +14,7 @@ export enum SortOrder {
   Desc = "desc",
 }
 
-export type Sort = { [key: string]: SortOrder.Asc | SortOrder.Desc }
+export type Sort = { orderBy: string; order: SortOrder.Asc | SortOrder.Desc }
 
 interface Props<T extends DataType> {
   children:
@@ -36,7 +36,7 @@ export function Table<T extends DataType>(props: Props<T>) {
   const orderBy = params.get("orderBy") as string | undefined
   const order = params.get("order") as SortOrder | undefined
 
-  const handleSort = (order: { orderBy: string; order: SortOrder }) => {
+  const handleSort = (order: Sort) => {
     const existingParams = Object.fromEntries(params)
     setParams({ ...existingParams, ...order })
   }
@@ -204,24 +204,6 @@ function Row(props: RowProps) {
       {props.children}
     </c.Flex>
   )
-}
-
-// Sometimes we have table thats using nested data, and so the sortKey needs to be nested
-// e.g { user: { createdAt: "desc" } }, instead of just { createdAt: "desc" }
-// so this function allows us to pass "user.createdAt" as the sortKey
-// and it converts it to the nested structure, pretty sweet right?
-
-export function getOrderBy(sort: Sort) {
-  const key = Object.keys(sort)[0]
-  const value = sort[key]
-  let object = {} as any
-  const result = object
-  const arr = key.split(".")
-  for (let i = 0; i < arr.length - 1; i++) {
-    object = object[arr[i]] = {}
-  }
-  object[arr[arr.length - 1]] = value
-  return result
 }
 
 export interface PaginationProps {

@@ -3,7 +3,6 @@ import { DropzoneOptions, FileRejection, useDropzone } from "react-dropzone"
 import * as c from "@chakra-ui/react"
 
 import { useS3Upload } from "~/lib/hooks/useS3"
-// import { useS3Upload } from "lib/hooks/useS3"
 import { useToast } from "~/lib/hooks/useToast"
 
 import { ButtonGroup } from "./ButtonGroup"
@@ -49,7 +48,7 @@ export const ImageUploader: React.FC<Props> = ({ children, path, onSubmit, dropz
     onDrop,
     multiple: false,
   })
-  const [upload, { loading }] = useS3Upload({ path })
+  const [upload, { isLoading }] = useS3Upload({ path })
 
   const handleSubmitImage = async () => {
     if (!image || !image.file) return
@@ -57,8 +56,8 @@ export const ImageUploader: React.FC<Props> = ({ children, path, onSubmit, dropz
       const uploadedFile = await upload(image.file)
       await onSubmit(uploadedFile.fileKey)
       handleClose()
-    } catch {
-      toast({ status: "error", description: "Error uploading image, please try again." })
+    } catch (error: any) {
+      toast({ status: "error", title: "Error uploading image", description: error.message as string })
     }
   }
 
@@ -92,10 +91,15 @@ export const ImageUploader: React.FC<Props> = ({ children, path, onSubmit, dropz
           <c.Image alt="image preview" objectFit="contain" w="100%" p={12} maxH="400px" src={image.preview} />
         )}
         <ButtonGroup>
-          <c.Button variant="ghost" isDisabled={loading} onClick={handleClose}>
+          <c.Button variant="ghost" isDisabled={isLoading} onClick={handleClose}>
             Cancel
           </c.Button>
-          <c.Button colorScheme="purple" isLoading={loading} isDisabled={loading} onClick={handleSubmitImage}>
+          <c.Button
+            colorScheme="purple"
+            isLoading={isLoading}
+            isDisabled={isLoading}
+            onClick={handleSubmitImage}
+          >
             Submit
           </c.Button>
         </ButtonGroup>

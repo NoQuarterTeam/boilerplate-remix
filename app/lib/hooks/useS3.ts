@@ -26,12 +26,12 @@ export type UploadFile = {
 }
 export function useS3Upload(
   props?: Props,
-): [(file: File, lazyProps?: Props) => Promise<UploadFile>, { loading: boolean }] {
-  const [loading, setLoading] = React.useState(false)
+): [(file: File, lazyProps?: Props) => Promise<UploadFile>, { isLoading: boolean }] {
+  const [isLoading, setIsLoading] = React.useState(false)
 
   async function upload(file: File, lazyProps?: Props) {
     try {
-      setLoading(true)
+      setIsLoading(true)
       let parsedKey = props?.path || lazyProps?.path || "/unknown"
       if (parsedKey[parsedKey.length - 1] === "/") {
         parsedKey = parsedKey.slice(0, -1)
@@ -56,7 +56,7 @@ export function useS3Upload(
         headers: { "Content-Type": file.type },
         body: file,
       })
-      setLoading(false)
+      setIsLoading(false)
       return {
         fileUrl: signedUrl.url,
         fileKey: key,
@@ -64,10 +64,10 @@ export function useS3Upload(
         fileType: file.type || null,
       }
     } catch (error) {
-      setLoading(false)
+      setIsLoading(false)
       throw error
     }
   }
 
-  return [upload, { loading }]
+  return [upload, { isLoading }]
 }

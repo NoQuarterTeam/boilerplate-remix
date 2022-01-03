@@ -65,7 +65,7 @@ export default function Posts() {
         >
           <Column<Post> sortKey="title" header="Title" row={(post) => post.title} />
           <Column<Post>
-            sortKey="post.author"
+            sortKey="author.firstName"
             display={{ base: "none", md: "flex" }}
             header="Author"
             row={(post) => post.author.firstName + " " + post.author.lastName}

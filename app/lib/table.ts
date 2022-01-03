@@ -4,8 +4,26 @@ export function getOrderByParams(request: Request) {
   const url = new URL(request.url)
   const orderBy = url.searchParams.get("orderBy") || undefined
   const order = url.searchParams.get("order") || undefined
-  return orderBy && order ? { [orderBy]: order } : undefined
+  if (!orderBy || !order) return undefined
+  return getOrderBy(orderBy, order)
 }
+
+// Sometimes we have table thats using nested data, and so the sortKey needs to be nested
+// e.g { user: { createdAt: "desc" } }, instead of just { createdAt: "desc" }
+// so this function allows us to pass "user.createdAt" as the sortKey
+// and it converts it to the nested structure, pretty sweet right?
+
+export function getOrderBy(orderBy: string, order: string) {
+  let object = {} as any
+  const result = object
+  const arr = orderBy.split(".")
+  for (let i = 0; i < arr.length - 1; i++) {
+    object = object[arr[i]] = {}
+  }
+  object[arr[arr.length - 1]] = order
+  return result
+}
+
 export function getPaginationParams(request: Request, take?: number) {
   const url = new URL(request.url)
   const page = parseInt(url.searchParams.get("page") || "") || 1
