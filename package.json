@@ -8,7 +8,7 @@
     "build": "remix build",
     "generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "postinstall": "remix setup node",
+    "postinstall": "prisma generate && remix setup node",
     "start": "remix-serve ./api/_build",
     "db:push": "prisma db push",
     "lint:fix": "eslint --config .eslintrc.commit.js --fix --cache --ext .ts,.tsx app",
