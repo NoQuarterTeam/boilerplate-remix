@@ -7,7 +7,6 @@ import {
   LoaderFunction,
   MetaFunction,
   redirect,
-  useActionData,
   useFetcher,
   useLoaderData,
   useTransition,
@@ -17,7 +16,7 @@ import { z } from "zod"
 import { Form, FormError, FormField } from "~/components/Form"
 import { ImageUploader } from "~/components/ImageUploader"
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
-import { ActionData, shallowEqual, validateFormData } from "~/lib/form"
+import { shallowEqual, validateFormData } from "~/lib/form"
 import { useToast } from "~/lib/hooks/useToast"
 import { badRequest } from "~/lib/remix"
 import { createImageUrl } from "~/lib/s3"
@@ -56,20 +55,12 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect("/profile")
 }
 
-type ProfileInput = {
-  email?: string
-  password?: string
-  firstName?: string
-  lastName?: string
-}
-
 export default function Profile() {
   const uploader = useFetcher()
   const formRef = React.useRef<HTMLFormElement>(null)
   const user = useLoaderData<CurrentUser>()
   const toast = useToast()
 
-  const form = useActionData<ActionData<ProfileInput>>()
   const [isDirty, setIsDirty] = React.useState(false)
   const { state, type } = useTransition()
 
@@ -93,7 +84,6 @@ export default function Profile() {
       <Form
         ref={formRef}
         method="post"
-        form={form}
         onChange={(e) => {
           const formData = new FormData(e.currentTarget)
           const data = Object.fromEntries(formData) as Record<string, string>

@@ -1,25 +1,17 @@
 import * as React from "react"
 import * as c from "@chakra-ui/react"
-import { Form as RemixForm, FormProps as RemixFormProps } from "remix"
+import { Form as RemixForm, FormProps as RemixFormProps, useActionData } from "remix"
 
 import { ActionData } from "~/lib/form"
 
-interface FormProps extends RemixFormProps {
-  form: ActionData<any> | undefined
-}
-
-export const FormContext = React.createContext<ActionData<any> | undefined>(undefined)
-
 export const Form = React.forwardRef(function _Form(
-  { form, ...props }: FormProps,
+  props: RemixFormProps,
   ref: React.RefObject<HTMLFormElement>,
 ) {
   return (
-    <FormContext.Provider value={form}>
-      <RemixForm ref={ref} {...props}>
-        {props.children}
-      </RemixForm>
-    </FormContext.Provider>
+    <RemixForm ref={ref} {...props}>
+      {props.children}
+    </RemixForm>
   )
 })
 
@@ -30,7 +22,7 @@ interface FormFieldProps extends c.InputProps {
 }
 
 export function FormField({ label, input, ...props }: FormFieldProps) {
-  const form = React.useContext(FormContext)
+  const form = useActionData<ActionData<any>>()
   const clonedInput =
     input &&
     React.cloneElement(input, { defaultValue: form?.data?.[props.name] || "", id: props.name, ...props })
@@ -44,7 +36,7 @@ export function FormField({ label, input, ...props }: FormFieldProps) {
 }
 
 export function FormError() {
-  const form = React.useContext(FormContext)
+  const form = useActionData<ActionData<any>>()
   if (!form?.formError) return null
   return (
     <c.FormControl isInvalid={!!form?.formError}>

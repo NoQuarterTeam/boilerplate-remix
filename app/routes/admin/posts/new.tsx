@@ -1,12 +1,12 @@
 import * as React from "react"
 import * as c from "@chakra-ui/react"
 import { PostType } from "@prisma/client"
-import { ActionFunction, redirect, useActionData, useTransition } from "remix"
+import { ActionFunction, redirect, useTransition } from "remix"
 import { z } from "zod"
 
-import { Form, FormError,FormField } from "~/components/Form"
+import { Form, FormError, FormField } from "~/components/Form"
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
-import { ActionData, validateFormData } from "~/lib/form"
+import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
 import { db } from "~/prisma/db"
 import { getCurrentUser } from "~/services/auth/auth.service"
@@ -25,11 +25,6 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect(`/admin/posts/${post.id}`)
 }
 
-type PostInput = {
-  title: string
-  type: PostType
-  description: string
-}
 const POST_TYPE_OPTIONS: { label: string; value: PostType }[] = [
   { value: PostType.FUNNY, label: "Funny" },
   { value: PostType.SERIOUS, label: "Serious" },
@@ -39,7 +34,6 @@ const POST_TYPE_OPTIONS: { label: string; value: PostType }[] = [
 ]
 
 export default function NewPost() {
-  const form = useActionData<ActionData<PostInput>>()
   const [isDirty, setIsDirty] = React.useState(false)
   const { state } = useTransition()
   const isSubmitting = state === "submitting"
@@ -52,7 +46,6 @@ export default function NewPost() {
 
       <Form
         method="post"
-        form={form}
         onChange={(e) => {
           const formData = new FormData(e.currentTarget)
           const data = Object.fromEntries(formData)

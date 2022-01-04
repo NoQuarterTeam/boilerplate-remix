@@ -1,10 +1,10 @@
 import * as React from "react"
 import * as c from "@chakra-ui/react"
-import { ActionFunction, Link, useActionData, useTransition } from "remix"
+import { ActionFunction, Link, useTransition } from "remix"
 import { z } from "zod"
 
 import { Form, FormError, FormField } from "~/components/Form"
-import { ActionData, validateFormData } from "~/lib/form"
+import { validateFormData } from "~/lib/form"
 import { useToast } from "~/lib/hooks/useToast"
 import { badRequest } from "~/lib/remix"
 import { sendResetPasswordLink } from "~/services/auth/auth.service"
@@ -18,13 +18,10 @@ export const action: ActionFunction = async ({ request }) => {
   return true
 }
 
-type ResetInput = {
-  email: string
-}
 export default function ForgotPassword() {
   const { state, type } = useTransition()
   const inputRef = React.useRef<HTMLInputElement>(null)
-  const form = useActionData<ActionData<ResetInput>>()
+
   const toast = useToast()
   React.useEffect(() => {
     if (type === "actionSubmission") {
@@ -38,7 +35,7 @@ export default function ForgotPassword() {
   return (
     <c.Center flexDir="column" pt={10}>
       <c.Box w={["100%", 400]}>
-        <Form method="post" form={form}>
+        <Form method="post">
           <c.Stack spacing={4}>
             <c.Heading as="h1">Forgot your password?</c.Heading>
             <c.Text>Enter your email below to receive your password reset instructions.</c.Text>

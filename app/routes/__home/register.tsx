@@ -1,9 +1,9 @@
 import * as c from "@chakra-ui/react"
-import { ActionFunction, Link, LoaderFunction, redirect, useActionData, useTransition } from "remix"
+import { ActionFunction, Link, LoaderFunction, redirect, useTransition } from "remix"
 import { z } from "zod"
 
 import { Form, FormError, FormField } from "~/components/Form"
-import { ActionData, validateFormData } from "~/lib/form"
+import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
 import { createUserSession, getUser, register } from "~/services/auth/auth.service"
 
@@ -29,21 +29,14 @@ export const action: ActionFunction = async ({ request }) => {
   return createUserSession(user.id, "/")
 }
 
-type RegisterInput = {
-  email: string
-  password: string
-  firstName: string
-  lastName: string
-}
-
 export default function Register() {
   const { state } = useTransition()
-  const form = useActionData<ActionData<RegisterInput>>()
+
   const isSubmitting = state === "submitting"
   return (
     <c.Center flexDir="column" pt={10}>
       <c.Box w={["100%", 400]}>
-        <Form method="post" form={form}>
+        <Form method="post">
           <c.Stack spacing={3}>
             <c.Heading as="h1">Register</c.Heading>
             <FormField isRequired label="Email address" name="email" placeholder="jim@gmail.com" />

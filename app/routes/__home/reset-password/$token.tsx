@@ -1,9 +1,9 @@
 import * as c from "@chakra-ui/react"
-import { ActionFunction, Link, redirect, useActionData, useParams, useTransition } from "remix"
+import { ActionFunction, Link, redirect, useParams, useTransition } from "remix"
 import { z } from "zod"
 
 import { Form, FormError, FormField } from "~/components/Form"
-import { ActionData, validateFormData } from "~/lib/form"
+import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
 import { resetPassword } from "~/services/auth/auth.service"
 
@@ -19,19 +19,15 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect("/login")
 }
 
-type ResetInput = {
-  password: string
-}
-
 export default function ResetPassword() {
   const { token } = useParams()
   const { state } = useTransition()
-  const form = useActionData<ActionData<ResetInput>>()
+
   const isSubmitting = state === "submitting"
   return (
     <c.Center flexDir="column" pt={10}>
       <c.Box w={["100%", 400]}>
-        <Form method="post" form={form}>
+        <Form method="post">
           <c.Stack spacing={4}>
             <c.Box>
               <c.Heading as="h1">Reset password</c.Heading>
