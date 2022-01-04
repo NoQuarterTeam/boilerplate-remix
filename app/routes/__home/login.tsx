@@ -18,7 +18,7 @@ import { createUserSession, getUser, login } from "~/services/auth/auth.service"
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request)
   if (user) return redirect("/")
-  return {}
+  return null
 }
 
 export const action: ActionFunction = async ({ request }) => {

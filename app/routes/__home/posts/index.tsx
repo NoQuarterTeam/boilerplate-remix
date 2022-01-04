@@ -2,7 +2,7 @@ import * as c from "@chakra-ui/react"
 import { Avatar } from "@chakra-ui/react"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
-import { HeadersFunction, json, LoaderFunction, MetaFunction, useLoaderData } from "remix"
+import { HeadersFunction, json, Link, LoaderFunction, MetaFunction, useLoaderData } from "remix"
 
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
 import { AwaitedFunction } from "~/lib/helpers/types"
@@ -20,6 +20,7 @@ export const headers: HeadersFunction = () => {
 const getPosts = async () => {
   const posts = await db.post.findMany({
     take: 10,
+    orderBy: { createdAt: "desc" },
     select: {
       id: true,
       title: true,
@@ -41,28 +42,28 @@ type LoaderData = AwaitedFunction<typeof getPosts>
 export default function Posts() {
   const { posts } = useLoaderData<LoaderData>()
   return (
-    <c.Box pt={10} pb={20} w="100%">
-      <c.Heading pb={10} fontSize={{ base: "2xl", md: "3xl" }}>
-        Posts
-      </c.Heading>
+    <c.Stack py={10} spacing={8}>
+      <c.Heading fontSize={{ base: "2xl", md: "3xl" }}>Posts</c.Heading>
       <c.SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
         {posts.map((post) => (
-          <Tile key={post.id}>
-            <TileHeader>
-              <TileHeading>{post.title}</TileHeading>
-            </TileHeader>
-            <TileBody>{post.description}</TileBody>
-            <TileFooter>
-              <c.Flex justify="flex-end">
-                <c.HStack>
-                  <Avatar size="sm" src={createImageUrl(post.author.avatar)} name={post.author.firstName} />
-                  <c.Text>{dayjs(post.createdAt).fromNow()}</c.Text>
-                </c.HStack>
-              </c.Flex>
-            </TileFooter>
-          </Tile>
+          <Link to={post.id} key={post.id}>
+            <Tile>
+              <TileHeader>
+                <TileHeading>{post.title}</TileHeading>
+              </TileHeader>
+              <TileBody>{post.description}</TileBody>
+              <TileFooter>
+                <c.Flex justify="flex-end">
+                  <c.HStack>
+                    <Avatar size="sm" src={createImageUrl(post.author.avatar)} name={post.author.firstName} />
+                    <c.Text>{dayjs(post.createdAt).fromNow()}</c.Text>
+                  </c.HStack>
+                </c.Flex>
+              </TileFooter>
+            </Tile>
+          </Link>
         ))}
       </c.SimpleGrid>
-    </c.Box>
+    </c.Stack>
   )
 }

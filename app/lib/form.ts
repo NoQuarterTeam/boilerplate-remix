@@ -22,7 +22,7 @@ export async function validateFormData<Schema extends z.ZodType<any>>(
     }
     return { fieldErrors, data }
   }
-  return { data }
+  return { data: validations.data }
 }
 
 export type ActionData<T> = {
