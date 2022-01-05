@@ -6,7 +6,7 @@ import { createImageUrl } from "~/lib/s3"
 import { db } from "~/prisma/db"
 
 export const headers: HeadersFunction = () => {
-  return { "Cache-Control": "max-age=3600" }
+  return { "Cache-Control": "max-age=3600, s-maxage=36000" }
 }
 
 const getPost = async (id?: string) => {
