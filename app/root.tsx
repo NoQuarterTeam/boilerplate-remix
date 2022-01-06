@@ -1,27 +1,11 @@
 import * as React from "react"
 import * as c from "@chakra-ui/react"
 import { withEmotionCache } from "@emotion/react"
-import {
-  json,
-  Links,
-  LiveReload,
-  LoaderFunction,
-  Meta,
-  MetaFunction,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useCatch,
-} from "remix"
+import { Links, LiveReload, Meta, MetaFunction, Outlet, Scripts, ScrollRestoration, useCatch } from "remix"
 
 import { ClientStyleContext, ServerStyleContext } from "~/lib/emotion/context"
 import { theme } from "~/lib/theme"
-import { getUser } from "~/services/auth/auth.service"
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const user = await getUser(request)
-  return json(user)
-}
 export const meta: MetaFunction = () => {
   return { title: "Boilerplate" }
 }
