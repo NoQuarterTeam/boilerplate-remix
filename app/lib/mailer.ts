@@ -4,7 +4,8 @@ import * as Sentry from "@sentry/node"
 import dayjs from "dayjs"
 import handlebars from "handlebars"
 import nodemailer, { Transporter } from "nodemailer"
-import { IS_PRODUCTION } from "./config.server"
+
+import { IS_PRODUCTION } from "./config"
 
 // DEV EMAIL
 export const DEV_EMAIL_OPTIONS: any = {

@@ -2,6 +2,7 @@ import sendgridClient from "@sendgrid/client"
 import sendgrid from "@sendgrid/mail"
 import aws, { S3 } from "aws-sdk/clients/all"
 
+import { IS_PRODUCTION } from "./config"
 import { Mailer } from "./mailer"
 // Only use on the server
 
@@ -18,9 +19,6 @@ export const {
   AWS_ACCESS_KEY_ID_BOILERPLATE,
   AWS_SECRET_ACCESS_KEY_BOILERPLATE,
 } = process.env
-
-// IS PRODUCTION
-export const IS_PRODUCTION = APP_ENV === "production"
 
 // WEB URL
 export const FULL_WEB_URL = `${IS_PRODUCTION ? "https://" : "http://"}${WEB_URL}`

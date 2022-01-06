@@ -1,13 +1,10 @@
 import * as c from "@chakra-ui/react"
-import { HeadersFunction, json, LoaderFunction, useLoaderData } from "remix"
+import { json, LoaderFunction, useLoaderData } from "remix"
 
+import { useLoaderHeaders } from "~/lib/headers"
 import { AwaitedFunction } from "~/lib/helpers/types"
 import { createImageUrl } from "~/lib/s3"
 import { db } from "~/prisma/db"
-
-export const headers: HeadersFunction = () => {
-  return { "Cache-Control": "max-age=3600, s-maxage=36000" }
-}
 
 const getPost = async (id?: string) => {
   if (!id) throw new Response("ID required", { status: 400 })
@@ -24,10 +21,11 @@ const getPost = async (id?: string) => {
   if (!post) throw new Response("Not Found", { status: 404 })
   return { post }
 }
+export const headers = useLoaderHeaders
 
 export const loader: LoaderFunction = async ({ params: { id } }) => {
   const data = await getPost(id)
-  return json(data)
+  return json(data, { headers: { "Cache-Control": "max-age=300, s-maxage=36000" } })
 }
 
 type LoaderData = AwaitedFunction<typeof getPost>

@@ -1,7 +1,8 @@
 import type { Prisma, User } from "@prisma/client"
 import { createCookieSessionStorage, redirect } from "remix"
 
-import { IS_PRODUCTION, SESSION_SECRET } from "~/lib/config.server"
+import { IS_PRODUCTION } from "~/lib/config"
+import { SESSION_SECRET } from "~/lib/config.server"
 import { createToken, decryptToken } from "~/lib/jwt"
 import { db } from "~/prisma/db"
 
