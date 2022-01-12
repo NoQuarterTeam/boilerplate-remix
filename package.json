@@ -61,7 +61,7 @@
     "@commitlint/config-conventional": "16.0.0",
     "@remix-run/dev": "1.1.1",
     "@types/bcrypt": "5.0.0",
-    "@types/jsonwebtoken": "8.5.6",
+    "@types/jsonwebtoken": "8.5.7",
     "@types/nodemailer": "6.4.4",
     "@types/react": "17.0.38",
     "@types/react-dom": "17.0.11",
