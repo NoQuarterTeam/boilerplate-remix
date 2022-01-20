@@ -57,7 +57,7 @@
     "zod": "3.11.6"
   },
   "devDependencies": {
-    "@commitlint/cli": "16.0.3",
+    "@commitlint/cli": "16.1.0",
     "@commitlint/config-conventional": "16.0.0",
     "@remix-run/dev": "1.1.1",
     "@types/bcrypt": "5.0.0",
