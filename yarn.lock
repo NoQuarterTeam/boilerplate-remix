@@ -1116,10 +1116,10 @@
     prop-types "^15.7.2"
     tslib "^2.1.0"
 
-"@remix-run/dev@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@remix-run/dev/-/dev-1.1.1.tgz#bbbb93149c88b5d8e992550c6c6e076dce5f424d"
-  integrity sha512-dkzMVgMzaQUppf2za3kD+izsEK1hLsLQSVtDD3wN7pBMEbWXaEkWb2X2lj3c9yRDArPB7y5+09rm4SUnE4mL6A==
+"@remix-run/dev@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@remix-run/dev/-/dev-1.1.3.tgz#f019339b7ffc09588fcd905eddb5fce0213f908b"
+  integrity sha512-VW2mWmK1r7aOVpPERvQe81tOk5LA5+NoE8s8xfNPkqcjFob3wpKN/EV+wP5f2mpczRg2RfyG2DlFEArIniY9qA==
   dependencies:
     cacache "^15.0.5"
     chokidar "^3.5.1"
