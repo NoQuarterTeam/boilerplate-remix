@@ -43,7 +43,7 @@
     "aws-sdk": "2.1066.0",
     "bcrypt": "5.0.1",
     "dayjs": "1.10.7",
-    "dotenv": "14.3.2",
+    "dotenv": "15.0.0",
     "framer-motion": "5.6.0",
     "handlebars": "4.7.7",
     "jsonwebtoken": "8.5.1",
