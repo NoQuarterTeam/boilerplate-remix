@@ -8,23 +8,26 @@
     "build": "remix build",
     "generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
+    "db:seed": "prisma db push --force-reset --preview-feature && node --require esbuild-register app/prisma/seed.ts",
     "postinstall": "prisma generate && remix setup node",
     "start": "remix-serve ./api/_build",
     "db:push": "prisma db push",
     "lint:fix": "eslint --config .eslintrc.commit.js --fix --cache --ext .ts,.tsx app",
     "prettify": "prettier --write app",
     "typecheck": "tsc --noEmit",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "vercel-build": "yarn prisma:generate && remix build && metronome setup",
+    "prisma:generate": "PRISMA_CLIENT_ENGINE_TYPE='dataproxy' prisma generate"
   },
   "prisma": {
     "schema": "app/prisma/schema.prisma"
   },
   "lint-staged": {
-    "*.(js|jsx|json|ts|tsx|html)": [
-      "prettier --write"
-    ],
     "*.(ts|tsx)": [
       "eslint --fix --config .eslintrc.commit.js"
+    ],
+    "*.(js|jsx|json|ts|tsx|html)": [
+      "prettier --write"
     ]
   },
   "dependencies": {
