@@ -1125,13 +1125,13 @@
     prop-types "^15.7.2"
     tslib "^2.1.0"
 
-"@remix-run/dev@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/dev/-/dev-1.2.0.tgz#d69cf24444d0d14d442cb7f4017e98d8a8578d8c"
-  integrity sha512-uO9PJv7fKdQYmUtgJ6NCT+6wIA/xt4ED0808YhKJuP9yrRVDWskURuTuxMxyfxQhgQzoy6sh0F32t4B5h0TcLg==
+"@remix-run/dev@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@remix-run/dev/-/dev-1.2.1.tgz#e7f099dfc7d28469e4aef57a34a33b3951cb767a"
+  integrity sha512-JHmj+0yg5vrYO+PkVYR7mZfI3QUOhIjYqNsQ8s2BnlTc0NPixoo8qtmjvh4H09MYnSqXTviFIKIhZUaR2xg0Lw==
   dependencies:
     "@esbuild-plugins/node-modules-polyfill" "^0.1.4"
-    "@remix-run/server-runtime" "1.2.0"
+    "@remix-run/server-runtime" "1.2.1"
     cacache "^15.0.5"
     chokidar "^3.5.1"
     esbuild "0.13.14"
@@ -1203,10 +1203,10 @@
     set-cookie-parser "^2.4.8"
     source-map "^0.7.3"
 
-"@remix-run/server-runtime@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/server-runtime/-/server-runtime-1.2.0.tgz#dcbf6f260c0fa4610977e126a3c8cbfde7b0fdc9"
-  integrity sha512-GC6gQyHFimJdB3D71pJwFX3Rw8A0wyH2SIZQEMNmj5RR7T1iEwSJsxDdM5sMHBCEeLH5rTHOTiKclBWG2OqEaQ==
+"@remix-run/server-runtime@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@remix-run/server-runtime/-/server-runtime-1.2.1.tgz#70f44ff6cd623456ab98ab9998af18b82a99b7a5"
+  integrity sha512-wn01V+O7y4dHQ059QGeXOpbG+d3IrqYnil9YDsJi4kielEFRDHDAFbmrMC+oF5qRYTuVRR3i6h2CSCyV2ICfeQ==
   dependencies:
     "@types/cookie" "^0.4.0"
     cookie "^0.4.1"
