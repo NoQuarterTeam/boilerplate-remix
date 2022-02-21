@@ -11,7 +11,7 @@ import { Column, Table } from "~/components/Table"
 import { Tile } from "~/components/Tile"
 import { AwaitedFunction } from "~/lib/helpers/types"
 import { getTableParams, TableParams } from "~/lib/table"
-import { db } from "~/prisma/db"
+import { db } from "~/prisma/db.server"
 
 const getUsers = async ({ search, ...tableParams }: TableParams) => {
   const users = await db.user.findMany({

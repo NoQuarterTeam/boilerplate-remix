@@ -15,7 +15,7 @@ import {
 import { ActionFunction, Form, LoaderFunction, redirect } from "remix"
 
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
-import { db } from "~/prisma/db"
+import { db } from "~/prisma/db.server"
 import { getCurrentUser, requireUser } from "~/services/auth/auth.service"
 
 export const loader: LoaderFunction = async ({ request }) => {

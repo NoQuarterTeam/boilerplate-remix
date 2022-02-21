@@ -3,7 +3,7 @@ import { HeadersFunction, json, LoaderFunction, useLoaderData } from "remix"
 
 import { AwaitedFunction } from "~/lib/helpers/types"
 import { createImageUrl } from "~/lib/s3"
-import { db } from "~/prisma/db"
+import { db } from "~/prisma/db.server"
 
 export const headers: HeadersFunction = () => {
   return { "Cache-Control": "max-age=300, s-maxage=3600" }

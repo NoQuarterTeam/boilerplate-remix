@@ -4,7 +4,7 @@ import { createCookieSessionStorage, redirect } from "remix"
 import { IS_PRODUCTION } from "~/lib/config"
 import { SESSION_SECRET } from "~/lib/config.server"
 import { createToken, decryptToken } from "~/lib/jwt"
-import { db } from "~/prisma/db"
+import { db } from "~/prisma/db.server"
 
 import { sendPasswordChangedEmail, sendResetPasswordEmail } from "../user/user.mailer"
 import { comparePasswords, hashPassword } from "./password.server"

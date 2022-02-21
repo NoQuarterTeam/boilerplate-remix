@@ -4,7 +4,7 @@ import { json, LoaderFunction, useLoaderData } from "remix"
 import { useLoaderHeaders } from "~/lib/headers"
 import { AwaitedFunction } from "~/lib/helpers/types"
 import { createImageUrl } from "~/lib/s3"
-import { db } from "~/prisma/db"
+import { db } from "~/prisma/db.server"
 
 const getPost = async (id?: string) => {
   if (!id) throw new Response("ID required", { status: 400 })
