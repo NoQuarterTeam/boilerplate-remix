@@ -2,7 +2,7 @@ import * as c from "@chakra-ui/react"
 import { json, LoaderFunction, useLoaderData } from "remix"
 
 import { Tile, TileBody, TileHeader, TileHeading } from "~/components/Tile"
-import { db } from "~/prisma/db"
+import { db } from "~/prisma/db.server"
 import { requireUser } from "~/services/auth/auth.service"
 
 export const loader: LoaderFunction = async ({ request }) => {

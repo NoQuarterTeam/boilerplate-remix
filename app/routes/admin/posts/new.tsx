@@ -8,7 +8,7 @@ import { Form, FormError, FormField } from "~/components/Form"
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
 import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
-import { db } from "~/prisma/db"
+import { db } from "~/prisma/db.server"
 import { getCurrentUser } from "~/services/auth/auth.service"
 
 export const action: ActionFunction = async ({ request }) => {
