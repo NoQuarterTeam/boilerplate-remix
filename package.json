@@ -62,7 +62,7 @@
   "devDependencies": {
     "@commitlint/cli": "16.2.1",
     "@commitlint/config-conventional": "16.2.1",
-    "@remix-run/dev": "1.2.1",
+    "@remix-run/dev": "1.2.2",
     "@types/bcrypt": "5.0.0",
     "@types/jsonwebtoken": "8.5.8",
     "@types/nodemailer": "6.4.4",
