@@ -43,7 +43,7 @@
     "@sendgrid/client": "7.6.1",
     "@sendgrid/mail": "7.6.1",
     "@sentry/node": "6.18.0",
-    "aws-sdk": "2.1077.0",
+    "aws-sdk": "2.1082.0",
     "bcrypt": "5.0.1",
     "dayjs": "1.10.7",
     "dotenv": "16.0.0",
