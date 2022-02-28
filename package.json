@@ -45,7 +45,7 @@
     "@sentry/node": "6.18.0",
     "aws-sdk": "2.1082.0",
     "bcrypt": "5.0.1",
-    "dayjs": "1.10.7",
+    "dayjs": "1.10.8",
     "dotenv": "16.0.0",
     "framer-motion": "6.2.8",
     "handlebars": "4.7.7",
