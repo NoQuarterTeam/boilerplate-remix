@@ -38,7 +38,7 @@
     "@emotion/styled": "11.8.1",
     "@prisma/client": "3.10.0",
     "@remix-run/react": "1.2.3",
-    "@remix-run/serve": "1.2.2",
+    "@remix-run/serve": "1.2.3",
     "@remix-run/vercel": "1.2.2",
     "@sendgrid/client": "7.6.1",
     "@sendgrid/mail": "7.6.1",
