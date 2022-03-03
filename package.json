@@ -16,7 +16,7 @@
     "prettify": "prettier --write app",
     "typecheck": "tsc --noEmit",
     "pre-commit": "lint-staged",
-    "vercel-build": "yarn prisma:generate && remix build && metronome setup",
+    "vercel-build": "yarn prisma:generate && remix build",
     "prisma:generate": "PRISMA_CLIENT_ENGINE_TYPE='dataproxy' prisma generate"
   },
   "prisma": {
