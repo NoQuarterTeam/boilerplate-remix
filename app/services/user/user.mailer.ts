@@ -1,5 +1,4 @@
 import { User } from "@prisma/client"
-import * as Sentry from "@sentry/node"
 
 import { FULL_WEB_URL, mailer } from "~/lib/config.server"
 
@@ -14,7 +13,7 @@ export async function sendResetPasswordEmail(user: User, token: string) {
       },
     })
   } catch (error) {
-    Sentry.captureException(error)
+    console.log(error)
   }
 }
 
@@ -26,6 +25,6 @@ export async function sendPasswordChangedEmail(user: User) {
       to: user.email,
     })
   } catch (error) {
-    Sentry.captureException(error)
+    console.log(error)
   }
 }

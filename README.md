@@ -14,7 +14,6 @@ Comes with user authentication included
 - Eslint
 - Prettier
 - Sendgrid SMTP
-- Sentry
 - Husky
 - Lint staged
 
@@ -43,11 +42,9 @@ then run
 npx husky install
 ```
 
-
 ## Development
 
 `yarn dev`
-
 
 ## Production
 
@@ -56,18 +53,12 @@ npx husky install
 - Create a Sendgrid account and set a SENDGRID_API_KEY environment variable in .env
 - Create templates for each email you want to send and use the templateId in the corresponding mailer class
 
-### Error tracing
-
-- Create a Sentry account + project for each package and add the DSN to the web config and the api env variables
-
 ### Deployment
 
 An example is deployed [here](https://boilerplate-remix.noquarter.co)
 
 We are using Vercel for deployment + Heroku for hosting the database
 
-
 ### Extra info
 
 - [Remix Docs](https://remix.run/docs)
-

@@ -12,7 +12,6 @@ export const {
   APP_ENV = "development",
   APP_SECRET = "APP_SECRET",
   SESSION_SECRET = "SESSION_SECRET",
-  SENTRY_DSN = "SENTRY_DSN",
   SENDGRID_API_KEY = "SENDGRID_API_KEY",
   WEB_URL = "localhost:3000",
   REDIS_URL = "",

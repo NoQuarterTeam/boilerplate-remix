@@ -1,6 +1,5 @@
 import sendgridClient from "@sendgrid/client"
 import sendgrid from "@sendgrid/mail"
-import * as Sentry from "@sentry/node"
 import dayjs from "dayjs"
 import handlebars from "handlebars"
 import nodemailer, { Transporter } from "nodemailer"
@@ -55,7 +54,6 @@ export class Mailer {
         this.sendDev(args)
       }
     } catch (err) {
-      Sentry.captureException(err)
       console.log("Error sending mail:", err)
     }
   }
