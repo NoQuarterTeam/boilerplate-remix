@@ -42,7 +42,7 @@
     "@remix-run/vercel": "1.2.3",
     "@sendgrid/client": "7.6.1",
     "@sendgrid/mail": "7.6.1",
-    "aws-sdk": "2.1082.0",
+    "aws-sdk": "2.1087.0",
     "bcrypt": "5.0.1",
     "dayjs": "1.10.8",
     "dotenv": "16.0.0",
