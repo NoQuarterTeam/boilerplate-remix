@@ -44,7 +44,7 @@
     "@sendgrid/mail": "7.6.2",
     "aws-sdk": "2.1092.0",
     "bcrypt": "5.0.1",
-    "dayjs": "1.10.8",
+    "dayjs": "1.11.0",
     "dotenv": "16.0.0",
     "framer-motion": "6.2.8",
     "handlebars": "4.7.7",
