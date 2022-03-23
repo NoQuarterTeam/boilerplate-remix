@@ -5948,10 +5948,10 @@ remark-rehype@^9.0.0:
     mdast-util-to-hast "^11.0.0"
     unified "^10.0.0"
 
-remix@1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/remix/-/remix-1.3.2.tgz#2dd4691624eba52742d589314758f9100d6ec8e3"
-  integrity sha512-jH9PHvATwvYDvx6xuQAD2lwhiwapCk94zF5rE/qUZe0uuKFCkMJXLULYp65CmgcN5c39EyITLz1ZFDIMGCi86g==
+remix@1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/remix/-/remix-1.3.3.tgz#add6c0026f498638c164d5583cde1398d7ce5af7"
+  integrity sha512-Zeqapn2Ppi4uADl7Q8z4TbSIuylYR+Mt2bPPh+rci//A+Mj1NU418NPJ0/bYNbeB0GN1TNL1ektGotjDFISsZA==
 
 require-directory@^2.1.1:
   version "2.1.1"
