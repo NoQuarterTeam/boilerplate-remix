@@ -75,14 +75,14 @@
     "eslint-plugin-simple-import-sort": "7.0.0",
     "husky": "7.0.4",
     "lint-staged": "12.3.7",
-    "prettier": "2.6.0",
+    "prettier": "2.6.1",
     "typescript": "4.6.3"
   },
   "engines": {
     "node": ">=14"
   },
   "resolutions": {
-    "prettier": "2.6.0"
+    "prettier": "2.6.1"
   },
   "sideEffects": false
 }
