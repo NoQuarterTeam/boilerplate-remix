@@ -39,7 +39,7 @@
     "@prisma/client": "3.12.0",
     "@remix-run/react": "1.4.1",
     "@remix-run/serve": "1.4.1",
-    "@remix-run/vercel": "1.4.0",
+    "@remix-run/vercel": "1.4.1",
     "@sendgrid/client": "7.6.2",
     "@sendgrid/mail": "7.6.2",
     "aws-sdk": "2.1116.0",
