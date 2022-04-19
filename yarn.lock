@@ -7030,10 +7030,10 @@ remark-rehype@^9.0.0:
     mdast-util-to-hast "^11.0.0"
     unified "^10.0.0"
 
-remix@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/remix/-/remix-1.4.0.tgz#fa47a09bac6c4ed1772ee8964f5bdafc3d868b38"
-  integrity sha512-yCSh9L+voOFGaFKCEw/379F0YNQLxDU3mDveEdxHUsJkqVyJI4qbSY27H5+2aVtcEW6h0qEefCZcXZyBa5A6ww==
+remix@1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/remix/-/remix-1.4.1.tgz#f9f4b4341754b86ed73733621974b50f5a2a3f73"
+  integrity sha512-lv8wqwGVYtFvplc5B9pQH0C17cO/MFrDFNbvaMQ3rDeguu+YYlQvVsDVw2NzXB8ZA6Ad7JxYRT341ADI+LuBCQ==
 
 repeat-element@^1.1.2:
   version "1.1.4"
