@@ -1567,23 +1567,6 @@
   dependencies:
     "@remix-run/node" "1.4.3"
 
-"@remix-run/node@1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@remix-run/node/-/node-1.4.1.tgz#4067b5315893845837f2c901c58c908c20c27b2e"
-  integrity sha512-82nujfiZTt7DyceeTWtKRL0L6QtHZy6WnW0zGFnOW2mjCsG9dA166po8X7026VWTa254BxckJLY9GgF+5957Bw==
-  dependencies:
-    "@remix-run/server-runtime" "1.4.1"
-    "@types/busboy" "^0.3.1"
-    "@types/node-fetch" "^2.5.12"
-    "@web-std/file" "^3.0.0"
-    abort-controller "^3.0.0"
-    blob-stream "^0.1.3"
-    busboy "^0.3.1"
-    cookie-signature "^1.1.0"
-    form-data "^4.0.0"
-    node-fetch "^2.6.1"
-    source-map-support "^0.5.21"
-
 "@remix-run/node@1.4.3":
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/@remix-run/node/-/node-1.4.3.tgz#73d1ade20df0f17e331fa4c0c980c56db1387e6e"
@@ -1619,18 +1602,6 @@
     express "^4.17.1"
     morgan "^1.10.0"
 
-"@remix-run/server-runtime@1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@remix-run/server-runtime/-/server-runtime-1.4.1.tgz#b3d0635c5f1b851b3b099307f9108c9efe1a9b3c"
-  integrity sha512-vC5+7IZSNbAQEHC0436O3bYl6DpPAguJT0sSoemHE1jwJ1x+hUej3/k1QjIy1T/bioa6/7eHPggnm0hUlIFX1g==
-  dependencies:
-    "@types/cookie" "^0.4.0"
-    cookie "^0.4.1"
-    jsesc "^3.0.1"
-    react-router-dom "^6.2.2"
-    set-cookie-parser "^2.4.8"
-    source-map "^0.7.3"
-
 "@remix-run/server-runtime@1.4.3":
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/@remix-run/server-runtime/-/server-runtime-1.4.3.tgz#d9a76ea5ff00492ff9275e43bb099e69ac80010d"
@@ -1643,12 +1614,12 @@
     set-cookie-parser "^2.4.8"
     source-map "^0.7.3"
 
-"@remix-run/vercel@1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@remix-run/vercel/-/vercel-1.4.1.tgz#9d9a5f745f6b6631f51b712ddb4a4ed9ab990d9d"
-  integrity sha512-4GdQGWSTw+QWkpxm8n0TcuA0XmVxvVYySJdpGQhmsrp/axCQZ+/rKosGkmjhFDkJeel+teXrM0wp7v3PgyzN3A==
+"@remix-run/vercel@1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@remix-run/vercel/-/vercel-1.4.3.tgz#3fb4c52b13064bc7eb2d79277d8f50ff14b86357"
+  integrity sha512-ZNDmn/j8mU0rK+6VdMqZmWx50thlXtioNLJ0U6qic3hSFFr4vO1weRTUwRIFE3Gm3AxmmvcLxx581W2aTnReVQ==
   dependencies:
-    "@remix-run/node" "1.4.1"
+    "@remix-run/node" "1.4.3"
 
 "@rollup/pluginutils@^4.0.0":
   version "4.1.2"
