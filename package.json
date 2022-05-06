@@ -65,7 +65,7 @@
     "@types/bcrypt": "5.0.0",
     "@types/jsonwebtoken": "8.5.8",
     "@types/nodemailer": "6.4.4",
-    "@types/react": "17.0.44",
+    "@types/react": "17.0.45",
     "@types/react-dom": "17.0.16",
     "@typescript-eslint/eslint-plugin": "5.22.0",
     "@typescript-eslint/parser": "5.22.0",
