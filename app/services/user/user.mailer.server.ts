@@ -1,6 +1,7 @@
 import { User } from "@prisma/client"
 
-import { FULL_WEB_URL, mailer } from "~/lib/config.server"
+import { FULL_WEB_URL } from "~/lib/config.server"
+import { mailer } from "~/lib/mailer.server"
 
 export async function sendResetPasswordEmail(user: User, token: string) {
   try {
