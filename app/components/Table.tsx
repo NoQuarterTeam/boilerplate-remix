@@ -46,7 +46,7 @@ export function Table<T extends DataType>(props: Props<T>) {
     (child) => child?.props,
   )
 
-  const columns = maybeColumns.filter(Boolean)
+  const columns = maybeColumns.filter(Boolean) as ColumnProps<T>[]
   const data = props.data || []
 
   return (
