@@ -1,12 +1,12 @@
 import * as c from "@chakra-ui/react"
-import { ActionFunction,LoaderFunction, redirect } from "@remix-run/node"
+import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node"
 import { Link, useSearchParams, useTransition } from "@remix-run/react"
 import { z } from "zod"
 
 import { Form, FormError, FormField } from "~/components/Form"
 import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
-import { createUserSession, getUser, login } from "~/services/auth/auth.service"
+import { createUserSession, getUser, login } from "~/services/auth/auth.server"
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request)

@@ -3,11 +3,11 @@ import { BiMoon, BiSun } from "react-icons/bi"
 import { CgAlbum, CgExternal, CgFileDocument, CgHome, CgUser } from "react-icons/cg"
 import * as c from "@chakra-ui/react"
 import { Role } from "@prisma/client"
-import { json,LoaderFunction } from "@remix-run/node"
-import { Form, NavLink,Outlet, useLoaderData } from "@remix-run/react"
+import { json, LoaderFunction } from "@remix-run/node"
+import { Form, NavLink, Outlet, useLoaderData } from "@remix-run/react"
 
-import type { CurrentUser } from "~/services/auth/auth.service"
-import { getCurrentUser, requireUser } from "~/services/auth/auth.service"
+import type { CurrentUser } from "~/services/auth/auth.server"
+import { getCurrentUser, requireUser } from "~/services/auth/auth.server"
 
 export const loader: LoaderFunction = async ({ request }) => {
   await requireUser(request)

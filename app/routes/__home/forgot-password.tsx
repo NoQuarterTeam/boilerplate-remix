@@ -8,7 +8,7 @@ import { Form, FormError, FormField } from "~/components/Form"
 import { validateFormData } from "~/lib/form"
 import { useToast } from "~/lib/hooks/useToast"
 import { badRequest } from "~/lib/remix"
-import { sendResetPasswordLink } from "~/services/auth/auth.service"
+import { sendResetPasswordLink } from "~/services/auth/auth.server"
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()

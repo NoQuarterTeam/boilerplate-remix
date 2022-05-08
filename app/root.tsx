@@ -20,7 +20,7 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error)
+  console.error("Boundary:", error)
   return (
     <Document>
       <c.VStack h="100vh" justify="center">

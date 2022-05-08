@@ -4,8 +4,8 @@ import { Outlet, useLoaderData } from "@remix-run/react"
 
 import { Limiter } from "~/components/Limiter"
 import { Nav } from "~/components/Nav"
-import type { CurrentUser } from "~/services/auth/auth.service"
-import { getUser } from "~/services/auth/auth.service"
+import type { CurrentUser } from "~/services/auth/auth.server"
+import { getUser } from "~/services/auth/auth.server"
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await getUser(request)

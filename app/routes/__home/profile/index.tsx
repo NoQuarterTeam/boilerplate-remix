@@ -13,9 +13,9 @@ import { useToast } from "~/lib/hooks/useToast"
 import { badRequest } from "~/lib/remix"
 import { createImageUrl } from "~/lib/s3"
 import { UPLOAD_PATHS } from "~/lib/uploadPaths"
-import type { CurrentUser } from "~/services/auth/auth.service"
-import { getCurrentUser, requireUser } from "~/services/auth/auth.service"
-import { updateUser } from "~/services/user/user.service"
+import type { CurrentUser } from "~/services/auth/auth.server"
+import { getCurrentUser, requireUser } from "~/services/auth/auth.server"
+import { updateUser } from "~/services/user/user.server"
 
 export const meta: MetaFunction = () => {
   return { title: "Profile" }

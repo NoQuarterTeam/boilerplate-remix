@@ -4,7 +4,7 @@ import { z } from "zod"
 import { validateFormData } from "~/lib/form"
 import { AwaitedFunction } from "~/lib/helpers/types"
 import { badRequest } from "~/lib/remix"
-import { createSignedUrl } from "~/services/s3/s3.service"
+import { createSignedUrl } from "~/services/s3/s3.server"
 
 export type GetSignedUrlActionData = AwaitedFunction<typeof createSignedUrl>
 

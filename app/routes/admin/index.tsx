@@ -4,7 +4,7 @@ import { useLoaderData } from "@remix-run/react"
 
 import { Tile, TileBody, TileHeader, TileHeading } from "~/components/Tile"
 import { db } from "~/lib/db.server"
-import { requireUser } from "~/services/auth/auth.service"
+import { requireUser } from "~/services/auth/auth.server"
 
 export const loader: LoaderFunction = async ({ request }) => {
   await requireUser(request)

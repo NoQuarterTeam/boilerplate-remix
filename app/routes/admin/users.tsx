@@ -1,8 +1,8 @@
 import { Role } from "@prisma/client"
-import { json,LoaderFunction, redirect } from "@remix-run/node"
+import { json, LoaderFunction, redirect } from "@remix-run/node"
 import { Outlet } from "@remix-run/react"
 
-import { getCurrentUser, requireUser } from "~/services/auth/auth.service"
+import { getCurrentUser, requireUser } from "~/services/auth/auth.server"
 
 export const loader: LoaderFunction = async ({ request }) => {
   await requireUser(request)

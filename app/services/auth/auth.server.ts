@@ -6,7 +6,7 @@ import { SESSION_SECRET } from "~/lib/config.server"
 import { db } from "~/lib/db.server"
 import { createToken, decryptToken } from "~/lib/jwt"
 
-import { sendPasswordChangedEmail, sendResetPasswordEmail } from "../user/user.mailer"
+import { sendPasswordChangedEmail, sendResetPasswordEmail } from "../user/user.mailer.server"
 import { comparePasswords, hashPassword } from "./password.server"
 
 export async function login({ email, password }: { email: string; password: string }) {

@@ -6,7 +6,7 @@ import { z } from "zod"
 import { Form, FormError, FormField } from "~/components/Form"
 import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
-import { resetPassword } from "~/services/auth/auth.service"
+import { resetPassword } from "~/services/auth/auth.server"
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()

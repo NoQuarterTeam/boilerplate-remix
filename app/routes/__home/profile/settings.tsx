@@ -17,7 +17,7 @@ import { Form } from "@remix-run/react"
 
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
 import { db } from "~/lib/db.server"
-import { getCurrentUser, requireUser } from "~/services/auth/auth.service"
+import { getCurrentUser, requireUser } from "~/services/auth/auth.server"
 
 export const loader: LoaderFunction = async ({ request }) => {
   await requireUser(request)

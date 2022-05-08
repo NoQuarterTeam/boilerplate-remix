@@ -10,7 +10,7 @@ import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/component
 import { db } from "~/lib/db.server"
 import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
-import { getCurrentUser } from "~/services/auth/auth.service"
+import { getCurrentUser } from "~/services/auth/auth.server"
 
 export const action: ActionFunction = async ({ request }) => {
   const postSchema = z.object({
