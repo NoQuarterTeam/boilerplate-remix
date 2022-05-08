@@ -9,4 +9,4 @@ node_modules
 tsconfig.tsbuildinfo
 .vercel
 .env
-wireguard.conf
+fly.wireguard.conf
