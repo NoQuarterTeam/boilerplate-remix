@@ -57,7 +57,7 @@ npx husky install
 
 An example is deployed [here](https://boilerplate-remix.noquarter.co)
 
-We are using Vercel for deployment + Heroku for hosting the database
+We are using Fly.io
 
 ### Extra info
 

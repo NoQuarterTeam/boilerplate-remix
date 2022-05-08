@@ -1,4 +1,4 @@
-import { ActionFunction, json } from "remix"
+import { ActionFunction, json } from "@remix-run/node"
 import { z } from "zod"
 
 import { validateFormData } from "~/lib/form"

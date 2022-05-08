@@ -1,5 +1,6 @@
 import * as c from "@chakra-ui/react"
-import { ActionFunction, Link, LoaderFunction, redirect, useTransition } from "remix"
+import { ActionFunction,LoaderFunction, redirect } from "@remix-run/node"
+import { Link, useTransition } from "@remix-run/react"
 import { z } from "zod"
 
 import { Form, FormError, FormField } from "~/components/Form"

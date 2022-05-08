@@ -12,10 +12,11 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react"
-import { ActionFunction, Form, LoaderFunction, redirect } from "remix"
+import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node"
+import { Form } from "@remix-run/react"
 
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
-import { db } from "~/prisma/db.server"
+import { db } from "~/lib/db.server"
 import { getCurrentUser, requireUser } from "~/services/auth/auth.service"
 
 export const loader: LoaderFunction = async ({ request }) => {

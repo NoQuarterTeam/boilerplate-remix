@@ -1,35 +1,52 @@
+const OFF = "off"
+const ERROR = "error"
+// const WARN = "warn"
+
+/**
+ * @type {import('@types/eslint').Linter.BaseConfig}
+ */
 module.exports = {
   root: true,
+  // ignorePatterns: ["./api/**"],
 
   parser: "@typescript-eslint/parser",
 
   plugins: ["@typescript-eslint"],
 
-  extends: ["plugin:@typescript-eslint/recommended", "prettier"],
-
+  extends: [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "@remix-run/eslint-config",
+    "@remix-run/eslint-config/node",
+    "@remix-run/eslint-config/jest-testing-library",
+    "prettier",
+  ],
   rules: {
-    "@typescript-eslint/array-type": "off",
-    "@typescript-eslint/ban-ts-ignore": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/explicit-member-accessibility": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-angle-bracket-type-assertion": "off",
-    "@typescript-eslint/no-empty-interface": "off",
-    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/ban-types": OFF,
+    "@typescript-eslint/array-type": OFF,
+    "@typescript-eslint/ban-ts-ignore": OFF,
+    "@typescript-eslint/consistent-type-imports": OFF,
+    "@typescript-eslint/explicit-function-return-type": OFF,
+    "@typescript-eslint/explicit-member-accessibility": OFF,
+    "@typescript-eslint/explicit-module-boundary-types": OFF,
+    "@typescript-eslint/no-angle-bracket-type-assertion": OFF,
+    "@typescript-eslint/no-empty-interface": OFF,
+    "@typescript-eslint/no-explicit-any": OFF,
     "@typescript-eslint/no-unused-vars": [
-      "error",
+      ERROR,
       { args: "none", argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
     ],
-    "@typescript-eslint/no-use-before-define": "off",
-    "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/prefer-interface": "off",
-    "jsx-a11y/anchor-is-valid": "off",
-    "no-extend-native": "off",
-    "prefer-const": "off",
-    "react/display-name": "off",
-    "react/no-unescaped-entities": "off",
-    "react/prop-types": "off",
+    "@typescript-eslint/no-use-before-define": OFF,
+    "@typescript-eslint/no-var-requires": OFF,
+    "@typescript-eslint/prefer-interface": OFF,
+    "jsx-a11y/anchor-is-valid": OFF,
+    "no-extend-native": OFF,
+    "prefer-const": OFF,
+    "react-hooks/exhaustive-deps": OFF,
+    "react/display-name": OFF,
+    "react/no-unescaped-entities": OFF,
+    "react/prop-types": OFF,
   },
   settings: {
     react: {

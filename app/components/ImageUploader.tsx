@@ -11,7 +11,6 @@ import { Modal } from "./Modal"
 interface Props {
   path: string
   onSubmit: (key: string) => Promise<any> | any
-
   dropzoneOptions?: Omit<DropzoneOptions, "multiple" | "onDrop">
 }
 

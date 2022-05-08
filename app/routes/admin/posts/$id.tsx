@@ -1,9 +1,10 @@
 import * as c from "@chakra-ui/react"
-import { HeadersFunction, json, LoaderFunction, useLoaderData } from "remix"
+import { HeadersFunction, json,LoaderFunction } from "@remix-run/node"
+import { useLoaderData } from "@remix-run/react"
 
+import { db } from "~/lib/db.server"
 import { AwaitedFunction } from "~/lib/helpers/types"
 import { createImageUrl } from "~/lib/s3"
-import { db } from "~/prisma/db.server"
 
 export const headers: HeadersFunction = () => {
   return { "Cache-Control": "max-age=300, s-maxage=3600" }

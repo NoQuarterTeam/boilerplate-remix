@@ -2,7 +2,7 @@ import * as React from "react"
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg"
 import * as c from "@chakra-ui/react"
 import { Prisma } from "@prisma/client"
-import { Link as RLink, useSearchParams } from "remix"
+import { Link as RLink, useSearchParams } from "@remix-run/react"
 
 import { NoData } from "./NoData"
 
@@ -164,7 +164,7 @@ function _ColumnField<T>({
     overflowX: "auto",
     ...props,
   }
-  return !!!hasNoLink && !!href ? (
+  return !hasNoLink && !!href ? (
     <c.Flex as={RLink} to={href} _hover={{ textDecor: "none" }} {...sharedProps}>
       {props.children}
     </c.Flex>

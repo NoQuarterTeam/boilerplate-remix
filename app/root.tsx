@@ -1,7 +1,8 @@
 import * as React from "react"
 import * as c from "@chakra-ui/react"
 import { withEmotionCache } from "@emotion/react"
-import { Links, LiveReload, Meta, MetaFunction, Outlet, Scripts, ScrollRestoration, useCatch } from "remix"
+import { MetaFunction } from "@remix-run/node"
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useCatch } from "@remix-run/react"
 
 import { ClientStyleContext, ServerStyleContext } from "~/lib/emotion/context"
 import { theme } from "~/lib/theme"

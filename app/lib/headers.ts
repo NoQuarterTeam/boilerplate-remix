@@ -1,4 +1,4 @@
-import { HeadersFunction } from "remix"
+import { HeadersFunction } from "@remix-run/node"
 
 export const useLoaderHeaders: HeadersFunction = ({ loaderHeaders }) => {
   const headers = new Headers()

@@ -1,14 +1,15 @@
 import * as React from "react"
 import * as c from "@chakra-ui/react"
 import { PostType } from "@prisma/client"
-import { ActionFunction, redirect, useTransition } from "remix"
+import { ActionFunction, redirect } from "@remix-run/node"
+import { useTransition } from "@remix-run/react"
 import { z } from "zod"
 
 import { Form, FormError, FormField } from "~/components/Form"
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
+import { db } from "~/lib/db.server"
 import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
-import { db } from "~/prisma/db.server"
 import { getCurrentUser } from "~/services/auth/auth.service"
 
 export const action: ActionFunction = async ({ request }) => {

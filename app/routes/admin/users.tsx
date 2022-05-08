@@ -1,5 +1,6 @@
 import { Role } from "@prisma/client"
-import { json, LoaderFunction, Outlet, redirect } from "remix"
+import { json,LoaderFunction, redirect } from "@remix-run/node"
+import { Outlet } from "@remix-run/react"
 
 import { getCurrentUser, requireUser } from "~/services/auth/auth.service"
 

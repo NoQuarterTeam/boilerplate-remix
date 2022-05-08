@@ -1,16 +1,8 @@
 import * as React from "react"
 import { BiTrash } from "react-icons/bi"
 import * as c from "@chakra-ui/react"
-import {
-  ActionFunction,
-  json,
-  LoaderFunction,
-  MetaFunction,
-  redirect,
-  useFetcher,
-  useLoaderData,
-  useTransition,
-} from "remix"
+import { ActionFunction, json, LoaderFunction, MetaFunction, redirect } from "@remix-run/node"
+import { useFetcher, useLoaderData, useTransition } from "@remix-run/react"
 import { z } from "zod"
 
 import { Form, FormError, FormField } from "~/components/Form"

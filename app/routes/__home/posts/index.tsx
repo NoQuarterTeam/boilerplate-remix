@@ -1,14 +1,15 @@
 import * as c from "@chakra-ui/react"
 import { Avatar } from "@chakra-ui/react"
+import { json,LoaderFunction, MetaFunction } from "@remix-run/node"
+import { Link, useLoaderData } from "@remix-run/react"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
-import { json, Link, LoaderFunction, MetaFunction, useLoaderData } from "remix"
 
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
+import { db } from "~/lib/db.server"
 import { useLoaderHeaders } from "~/lib/headers"
 import { AwaitedFunction } from "~/lib/helpers/types"
 import { createImageUrl } from "~/lib/s3"
-import { db } from "~/prisma/db.server"
 
 dayjs.extend(relativeTime)
 

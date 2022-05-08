@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Box, Flex, Heading, Link, LinkProps, Stack, useColorModeValue } from "@chakra-ui/react"
-import { NavLink, Outlet } from "remix"
+import { NavLink, Outlet } from "@remix-run/react"
 
 export default function ProfileLayout() {
   return (
@@ -38,9 +38,10 @@ interface ProfileLinkProps extends LinkProps {
   to: string
   end?: boolean
 }
-const ProfileLink: React.FC<ProfileLinkProps> = ({ to, end, ...props }) => {
+function ProfileLink({ to, end, ...props }: ProfileLinkProps) {
   const activeColor = useColorModeValue("black", "white")
   const inactiveColor = useColorModeValue("gray.500", "gray.400")
+  const color = useColorModeValue("black", "white")
   return (
     <NavLink to={to} end={end}>
       {({ isActive }) => (
@@ -51,7 +52,7 @@ const ProfileLink: React.FC<ProfileLinkProps> = ({ to, end, ...props }) => {
           justifyContent={{ base: "center", md: "flex-start" }}
           textDecoration="none !important"
           color={isActive ? activeColor : inactiveColor}
-          _hover={{ color: useColorModeValue("black", "white") }}
+          _hover={{ color }}
           fontWeight={isActive ? "semibold" : "normal"}
         >
           {props.children}

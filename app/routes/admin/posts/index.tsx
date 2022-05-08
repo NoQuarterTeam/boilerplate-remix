@@ -1,15 +1,16 @@
 import * as c from "@chakra-ui/react"
 import { Prisma } from "@prisma/client"
+import { json, LoaderFunction } from "@remix-run/node"
+import { useLoaderData } from "@remix-run/react"
 import dayjs from "dayjs"
-import { json, LoaderFunction, useLoaderData } from "remix"
 
 import { LinkButton } from "~/components/LinkButton"
 import { Search } from "~/components/Search"
 import { Column, Table } from "~/components/Table"
 import { Tile } from "~/components/Tile"
+import { db } from "~/lib/db.server"
 import { AwaitedFunction } from "~/lib/helpers/types"
 import { getTableParams, TableParams } from "~/lib/table"
-import { db } from "~/prisma/db.server"
 
 const getPosts = async ({ search, ...tableParams }: TableParams) => {
   const posts = await db.post.findMany({

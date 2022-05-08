@@ -1,8 +1,9 @@
 import * as c from "@chakra-ui/react"
-import { json, LoaderFunction, useLoaderData } from "remix"
+import { json, LoaderFunction } from "@remix-run/node"
+import { useLoaderData } from "@remix-run/react"
 
 import { Tile, TileBody, TileHeader, TileHeading } from "~/components/Tile"
-import { db } from "~/prisma/db.server"
+import { db } from "~/lib/db.server"
 import { requireUser } from "~/services/auth/auth.service"
 
 export const loader: LoaderFunction = async ({ request }) => {

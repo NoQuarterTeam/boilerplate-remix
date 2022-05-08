@@ -1,10 +1,10 @@
 import type { Prisma, User } from "@prisma/client"
-import { createCookieSessionStorage, redirect } from "remix"
+import { createCookieSessionStorage, redirect } from "@remix-run/node"
 
 import { IS_PRODUCTION } from "~/lib/config"
 import { SESSION_SECRET } from "~/lib/config.server"
+import { db } from "~/lib/db.server"
 import { createToken, decryptToken } from "~/lib/jwt"
-import { db } from "~/prisma/db.server"
 
 import { sendPasswordChangedEmail, sendResetPasswordEmail } from "../user/user.mailer"
 import { comparePasswords, hashPassword } from "./password.server"

@@ -1,7 +1,7 @@
 import { BiCog, BiExit, BiMoon, BiSun, BiUser } from "react-icons/bi"
 import { GiHamburgerMenu } from "react-icons/gi"
 import * as c from "@chakra-ui/react"
-import { Link, useSubmit } from "remix"
+import { Link, useSubmit } from "@remix-run/react"
 
 import { createImageUrl } from "~/lib/s3"
 import type { CurrentUser } from "~/services/auth/auth.service"

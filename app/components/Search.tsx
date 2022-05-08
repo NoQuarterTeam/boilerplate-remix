@@ -1,7 +1,7 @@
 import * as React from "react"
 import { CgClose, CgSearch } from "react-icons/cg"
 import * as c from "@chakra-ui/react"
-import { useSearchParams } from "remix"
+import { useSearchParams } from "@remix-run/react"
 
 interface Props extends c.BoxProps {
   placeholder?: string
@@ -13,7 +13,7 @@ export function Search({ placeholder, ...props }: Props) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    if (!search && !!!params.get("search")) return
+    if (!search && !params.get("search")) return
     const existingParams = Object.fromEntries(params)
     if (!search) {
       delete existingParams.search
