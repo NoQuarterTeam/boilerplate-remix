@@ -38,8 +38,8 @@ model Post {
   title       String
   type        PostType @default(FUNNY)
   description String
-  author      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String   @db.Uuid
   createdAt   DateTime @default(now()) @db.Timestamptz(6)
   updatedAt   DateTime @default(now()) @updatedAt @db.Timestamptz(6)
-  userId      String   @db.Uuid
 }
