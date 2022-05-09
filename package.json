@@ -45,7 +45,7 @@
     "@remix-run/server-runtime": "1.4.3",
     "@sendgrid/client": "7.6.2",
     "@sendgrid/mail": "7.6.2",
-    "aws-sdk": "2.1125.0",
+    "aws-sdk": "2.1130.0",
     "bcrypt": "5.0.1",
     "compression": "1.7.4",
     "cross-env": "7.0.3",
