@@ -41,7 +41,7 @@
     "@prisma/client": "3.14.0",
     "@remix-run/express": "1.5.1",
     "@remix-run/node": "1.5.1",
-    "@remix-run/react": "1.4.3",
+    "@remix-run/react": "1.5.1",
     "@remix-run/server-runtime": "1.4.3",
     "@sendgrid/client": "7.6.2",
     "@sendgrid/mail": "7.6.2",
