@@ -39,7 +39,7 @@
     "@emotion/server": "11.4.0",
     "@emotion/styled": "11.8.1",
     "@prisma/client": "3.14.0",
-    "@remix-run/express": "1.5.0",
+    "@remix-run/express": "1.5.1",
     "@remix-run/node": "1.5.0",
     "@remix-run/react": "1.4.3",
     "@remix-run/server-runtime": "1.4.3",
