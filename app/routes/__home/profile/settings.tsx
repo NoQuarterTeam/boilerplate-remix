@@ -12,16 +12,16 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react"
-import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node"
+import { ActionFunction, LoaderArgs, redirect } from "@remix-run/node"
 import { Form } from "@remix-run/react"
 
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
 import { db } from "~/lib/db.server"
 import { getCurrentUser, requireUser } from "~/services/auth/auth.server"
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderArgs) => {
   await requireUser(request)
-  return {}
+  return null
 }
 export const action: ActionFunction = async ({ request }) => {
   const user = await getCurrentUser(request)

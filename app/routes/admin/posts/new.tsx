@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as c from "@chakra-ui/react"
 import { PostType } from "@prisma/client"
-import { ActionFunction, redirect } from "@remix-run/node"
+import { ActionArgs, redirect } from "@remix-run/node"
 import { useTransition } from "@remix-run/react"
 import { z } from "zod"
 
@@ -12,7 +12,7 @@ import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
 import { getCurrentUser } from "~/services/auth/auth.server"
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: ActionArgs) => {
   const postSchema = z.object({
     title: z.string().min(1, { message: "Required" }),
     description: z.string().min(1, { message: "Required" }),

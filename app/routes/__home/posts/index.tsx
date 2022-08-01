@@ -1,6 +1,6 @@
 import * as c from "@chakra-ui/react"
 import { Avatar } from "@chakra-ui/react"
-import { json,LoaderFunction, MetaFunction } from "@remix-run/node"
+import { json } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
@@ -8,12 +8,11 @@ import relativeTime from "dayjs/plugin/relativeTime"
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
 import { db } from "~/lib/db.server"
 import { useLoaderHeaders } from "~/lib/headers"
-import { AwaitedFunction } from "~/lib/helpers/types"
 import { createImageUrl } from "~/lib/s3"
 
 dayjs.extend(relativeTime)
 
-export const meta: MetaFunction = () => {
+export const meta = () => {
   return { title: "Posts" }
 }
 export const headers = useLoaderHeaders
@@ -34,14 +33,13 @@ const getPosts = async () => {
   return { posts, count }
 }
 
-export const loader: LoaderFunction = async () => {
+export const loader = async () => {
   const posts = await getPosts()
   return json(posts, { headers: { "Cache-Control": "max-age=300, s-maxage=3600" } })
 }
-type LoaderData = AwaitedFunction<typeof getPosts>
 
 export default function Posts() {
-  const { posts } = useLoaderData<LoaderData>()
+  const { posts } = useLoaderData<typeof loader>()
   return (
     <c.Stack py={10} spacing={8}>
       <c.Heading fontSize={{ base: "2xl", md: "3xl" }}>Posts</c.Heading>

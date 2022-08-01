@@ -1,12 +1,12 @@
 import * as c from "@chakra-ui/react"
-import { json, LoaderFunction } from "@remix-run/node"
+import { json, LoaderArgs } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 
 import { Tile, TileBody, TileHeader, TileHeading } from "~/components/Tile"
 import { db } from "~/lib/db.server"
 import { requireUser } from "~/services/auth/auth.server"
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderArgs) => {
   await requireUser(request)
   const userCount = await db.user.count()
   const postCount = await db.post.count()

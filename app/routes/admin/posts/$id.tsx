@@ -1,34 +1,27 @@
 import * as c from "@chakra-ui/react"
-import { HeadersFunction, json,LoaderFunction } from "@remix-run/node"
+import { HeadersFunction, json, LoaderFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 
 import { db } from "~/lib/db.server"
-import { AwaitedFunction } from "~/lib/helpers/types"
+import { badRequest, notFound } from "~/lib/remix"
 import { createImageUrl } from "~/lib/s3"
 
 export const headers: HeadersFunction = () => {
   return { "Cache-Control": "max-age=300, s-maxage=3600" }
 }
 
-const getPost = async (id?: string) => {
-  if (!id) throw new Response("ID required", { status: 400 })
+export const loader: LoaderFunction = async ({ params: { id } }) => {
+  if (!id) throw badRequest("ID required")
   const post = await db.post.findUnique({
     where: { id },
     select: { id: true, title: true, type: true, description: true, author: true },
   })
-  if (!post) throw new Response("Not Found", { status: 404 })
-  return { post }
+  if (!post) throw notFound("Post not Found")
+  return json({ post })
 }
-
-export const loader: LoaderFunction = async ({ params: { id } }) => {
-  const data = await getPost(id)
-  return json(data)
-}
-
-type LoaderData = AwaitedFunction<typeof getPost>
 
 export default function PostDetail() {
-  const { post } = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<typeof loader>()
   return (
     <c.Box>
       <c.Flex justify="space-between">

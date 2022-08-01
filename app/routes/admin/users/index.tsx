@@ -2,8 +2,9 @@ import * as React from "react"
 import { CgSoftwareDownload, CgUserAdd } from "react-icons/cg"
 import * as c from "@chakra-ui/react"
 import { Prisma } from "@prisma/client"
-import { json,LoaderFunction } from "@remix-run/node"
+import { json, LoaderArgs } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
+import type { UseDataFunctionReturn } from "@remix-run/react/dist/components"
 import dayjs from "dayjs"
 
 import { PartialCheckIcon } from "~/components/PartialCheckIcon"
@@ -11,10 +12,12 @@ import { Search } from "~/components/Search"
 import { Column, Table } from "~/components/Table"
 import { Tile } from "~/components/Tile"
 import { db } from "~/lib/db.server"
-import { AwaitedFunction } from "~/lib/helpers/types"
-import { getTableParams, TableParams } from "~/lib/table"
+import { getTableParams } from "~/lib/table"
 
-const getUsers = async ({ search, ...tableParams }: TableParams) => {
+const TAKE = 10
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const { search, ...tableParams } = getTableParams(request)
   const users = await db.user.findMany({
     ...tableParams,
     where: search
@@ -29,21 +32,13 @@ const getUsers = async ({ search, ...tableParams }: TableParams) => {
     select: { id: true, firstName: true, lastName: true, email: true, createdAt: true },
   })
   const count = await db.user.count()
-  return { users, count }
+  return json({ users, count })
 }
 
-const TAKE = 10
-
-export const loader: LoaderFunction = async ({ request }) => {
-  const data = await getUsers(getTableParams(request, TAKE, { createdAt: Prisma.SortOrder.desc }))
-  return json(data)
-}
-
-type LoaderData = AwaitedFunction<typeof getUsers>
-type User = LoaderData["users"][0]
+type User = UseDataFunctionReturn<typeof loader>["users"][0]
 
 export default function AdminIndex() {
-  const { users, count } = useLoaderData<LoaderData>()
+  const { users, count } = useLoaderData<typeof loader>()
   const [selectedUsers, setSelectedUsers] = React.useState<string[]>([])
   const toggleSelected = (userId: string) => {
     if (selectedUsers.includes(userId)) {

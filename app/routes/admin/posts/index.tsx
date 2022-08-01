@@ -1,7 +1,8 @@
 import * as c from "@chakra-ui/react"
 import { Prisma } from "@prisma/client"
-import { json, LoaderFunction } from "@remix-run/node"
+import { json, LoaderArgs, LoaderFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
+import { UseDataFunctionReturn } from "@remix-run/react/dist/components"
 import dayjs from "dayjs"
 
 import { LinkButton } from "~/components/LinkButton"
@@ -9,10 +10,10 @@ import { Search } from "~/components/Search"
 import { Column, Table } from "~/components/Table"
 import { Tile } from "~/components/Tile"
 import { db } from "~/lib/db.server"
-import { AwaitedFunction } from "~/lib/helpers/types"
-import { getTableParams, TableParams } from "~/lib/table"
+import { getTableParams } from "~/lib/table"
 
-const getPosts = async ({ search, ...tableParams }: TableParams) => {
+export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
+  const { search, ...tableParams } = getTableParams(request)
   const posts = await db.post.findMany({
     ...tableParams,
     where: search
@@ -33,21 +34,13 @@ const getPosts = async ({ search, ...tableParams }: TableParams) => {
     },
   })
   const count = await db.post.count()
-  return { posts, count }
+  return json({ posts, count })
 }
 
-const TAKE = 10
-
-export const loader: LoaderFunction = async ({ request }) => {
-  const posts = await getPosts(getTableParams(request, TAKE, { createdAt: Prisma.SortOrder.desc }))
-  return json(posts)
-}
-
-type LoaderData = AwaitedFunction<typeof getPosts>
-type Post = LoaderData["posts"][0]
+type Post = UseDataFunctionReturn<typeof loader>["posts"][0]
 
 export default function Posts() {
-  const { posts, count } = useLoaderData<LoaderData>()
+  const { posts, count } = useLoaderData<typeof loader>()
   return (
     <c.Stack spacing={4}>
       <c.Flex justify="space-between">
@@ -61,7 +54,7 @@ export default function Posts() {
         <Table
           noDataText="No posts found"
           data={posts}
-          take={TAKE}
+          take={10}
           getRowHref={(post) => post.id}
           count={count}
         >

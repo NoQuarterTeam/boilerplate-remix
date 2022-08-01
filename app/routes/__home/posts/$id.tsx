@@ -1,14 +1,16 @@
 import * as c from "@chakra-ui/react"
-import { json,LoaderFunction } from "@remix-run/node"
+import { json, LoaderArgs } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 
 import { db } from "~/lib/db.server"
 import { useLoaderHeaders } from "~/lib/headers"
-import { AwaitedFunction } from "~/lib/helpers/types"
+import { badRequest, notFound } from "~/lib/remix"
 import { createImageUrl } from "~/lib/s3"
 
-const getPost = async (id?: string) => {
-  if (!id) throw new Response("ID required", { status: 400 })
+export const headers = useLoaderHeaders
+
+export const loader = async ({ params: { id } }: LoaderArgs) => {
+  if (!id) throw badRequest("ID required")
   const post = await db.post.findUnique({
     where: { id },
     select: {
@@ -19,20 +21,12 @@ const getPost = async (id?: string) => {
       author: { select: { firstName: true, avatar: true } },
     },
   })
-  if (!post) throw new Response("Not Found", { status: 404 })
-  return { post }
+  if (!post) throw notFound("Post not Found")
+  return json({ post }, { headers: { "Cache-Control": "max-age=300, s-maxage=36000" } })
 }
-export const headers = useLoaderHeaders
-
-export const loader: LoaderFunction = async ({ params: { id } }) => {
-  const data = await getPost(id)
-  return json(data, { headers: { "Cache-Control": "max-age=300, s-maxage=36000" } })
-}
-
-type LoaderData = AwaitedFunction<typeof getPost>
 
 export default function PostDetail() {
-  const { post } = useLoaderData<LoaderData>()
+  const { post } = useLoaderData<typeof loader>()
   return (
     <c.Stack py={10} spacing={8}>
       <c.Stack justify="space-between">

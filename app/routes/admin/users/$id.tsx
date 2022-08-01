@@ -1,30 +1,23 @@
 import { Avatar, Box, Flex, Heading, Stack, Text } from "@chakra-ui/react"
-import { json,LoaderFunction } from "@remix-run/node"
+import { json, LoaderArgs } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 
 import { db } from "~/lib/db.server"
-import { AwaitedFunction } from "~/lib/helpers/types"
+import { badRequest, notFound } from "~/lib/remix"
 import { createImageUrl } from "~/lib/s3"
 
-const getUser = async (id?: string) => {
-  if (!id) throw new Response("ID required", { status: 400 })
+export const loader = async ({ params: { id } }: LoaderArgs) => {
+  if (!id) throw badRequest("ID required")
   const user = await db.user.findUnique({
     where: { id },
     select: { id: true, avatar: true, firstName: true, email: true },
   })
-  if (!user) throw new Response("Not Found", { status: 404 })
-  return { user }
+  if (!user) throw notFound("User not Found")
+  return json({ user })
 }
-
-export const loader: LoaderFunction = async ({ params: { id } }) => {
-  const data = await getUser(id)
-  return json(data)
-}
-
-type LoaderData = AwaitedFunction<typeof getUser>
 
 export default function UserDetail() {
-  const { user } = useLoaderData<LoaderData>()
+  const { user } = useLoaderData<typeof loader>()
   return (
     <Box>
       <Flex justify="space-between">

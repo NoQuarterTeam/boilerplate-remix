@@ -1,7 +1,7 @@
 import * as React from "react"
 import { BiTrash } from "react-icons/bi"
 import * as c from "@chakra-ui/react"
-import { ActionFunction, json, LoaderFunction, MetaFunction, redirect } from "@remix-run/node"
+import { ActionArgs, json, LoaderArgs, MetaFunction, redirect } from "@remix-run/node"
 import { useFetcher, useLoaderData, useTransition } from "@remix-run/react"
 import { z } from "zod"
 
@@ -13,7 +13,6 @@ import { useToast } from "~/lib/hooks/useToast"
 import { badRequest } from "~/lib/remix"
 import { createImageUrl } from "~/lib/s3"
 import { UPLOAD_PATHS } from "~/lib/uploadPaths"
-import type { CurrentUser } from "~/services/auth/auth.server"
 import { getCurrentUser, requireUser } from "~/services/auth/auth.server"
 import { updateUser } from "~/services/user/user.server"
 
@@ -21,13 +20,13 @@ export const meta: MetaFunction = () => {
   return { title: "Profile" }
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderArgs) => {
   await requireUser(request)
   const user = await getCurrentUser(request)
   return json(user)
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: ActionArgs) => {
   const user = await getCurrentUser(request)
   const formData = await request.formData()
   const updateSchema = z.object({
@@ -50,7 +49,7 @@ export const action: ActionFunction = async ({ request }) => {
 export default function Profile() {
   const uploader = useFetcher()
   const formRef = React.useRef<HTMLFormElement>(null)
-  const user = useLoaderData<CurrentUser>()
+  const user = useLoaderData<typeof loader>()
   const toast = useToast()
 
   const [isDirty, setIsDirty] = React.useState(false)

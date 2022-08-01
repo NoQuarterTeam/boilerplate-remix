@@ -1,5 +1,5 @@
 import * as c from "@chakra-ui/react"
-import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node"
+import { ActionArgs, LoaderArgs, redirect } from "@remix-run/node"
 import { Link, useTransition } from "@remix-run/react"
 import { z } from "zod"
 
@@ -8,13 +8,13 @@ import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
 import { createUserSession, getUser, register } from "~/services/auth/auth.server"
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader = async ({ request }: LoaderArgs) => {
   const user = await getUser(request)
   if (user) return redirect("/")
   return {}
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: ActionArgs) => {
   const formData = await request.formData()
   const registerSchema = z.object({
     email: z.string().min(3).email("Invalid email"),

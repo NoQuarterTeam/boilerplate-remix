@@ -4,13 +4,13 @@ import * as c from "@chakra-ui/react"
 import { Link, useSubmit } from "@remix-run/react"
 
 import { createImageUrl } from "~/lib/s3"
-import type { CurrentUser } from "~/services/auth/auth.server"
+import type { CurrentUserJson } from "~/services/auth/auth.server"
 
 import { Limiter } from "./Limiter"
 import { LinkButton } from "./LinkButton"
 
 interface Props {
-  user: CurrentUser | null
+  user: CurrentUserJson | null
 }
 export function Nav(props: Props) {
   const submit = useSubmit()

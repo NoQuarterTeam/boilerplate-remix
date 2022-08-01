@@ -105,6 +105,11 @@ export async function getUser(request: Request) {
 }
 
 export type CurrentUser = Omit<User, "password">
+export type CurrentUserJson = Omit<User, "password" | "createdAt" | "updatedAt"> & {
+  createdAt: string
+  updatedAt: string
+}
+
 export async function getCurrentUser(request: Request) {
   const id = await getUserIdFromSession(request)
   if (!id) throw logout(request)
