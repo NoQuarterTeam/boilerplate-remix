@@ -299,7 +299,7 @@ function Pagination(props: PaginationProps) {
       />
 
       {paginationRange.map((pageNumber) => {
-        if (pageNumber === DOTS) return <c.Box>&#8230;</c.Box>
+        if (pageNumber === DOTS) return <c.Box key={pageNumber}>&#8230;</c.Box>
         return (
           <c.Button
             fontWeight={pageNumber === currentPage ? "bold" : "normal"}
