@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client"
+import type { Prisma } from "@prisma/client"
 
 // Sometimes we have table thats using nested data, and so the sortKey needs to be nested
 // e.g { user: { createdAt: "desc" } }, instead of just { createdAt: "desc" }
