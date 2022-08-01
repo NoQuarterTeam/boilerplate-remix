@@ -15,9 +15,10 @@ import { db } from "~/lib/db.server"
 import { getTableParams } from "~/lib/table"
 
 const TAKE = 10
+const DEFAULT_ORDER = { orderBy: "createdAt", order: Prisma.SortOrder.desc }
 
 export const loader = async ({ request }: LoaderArgs) => {
-  const { search, ...tableParams } = getTableParams(request)
+  const { search, ...tableParams } = getTableParams(request, TAKE, DEFAULT_ORDER)
   const users = await db.user.findMany({
     ...tableParams,
     where: search
@@ -84,6 +85,7 @@ export default function AdminIndex() {
       <Tile>
         <Table
           take={TAKE}
+          defaultOrder={DEFAULT_ORDER}
           noDataText="No users found"
           data={users}
           getRowHref={(user) => user.id}
