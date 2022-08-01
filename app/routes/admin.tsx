@@ -65,9 +65,9 @@ export default function AdminLayout() {
             <c.Text>{user.firstName}</c.Text>
           </c.Center>
           <Form action="/logout" method="post">
-            <c.Button type="submit" isFullWidth variant="outline" size="sm">
+            <c.Button type="submit" w="100%" variant="outline" size="sm">
               <c.Icon boxSize="20px" as={CgExternal} mr={{ base: 0, md: 2 }} />
-              <c.Text d={{ base: "none", md: "block" }}>Logout</c.Text>
+              <c.Text display={{ base: "none", md: "block" }}>Logout</c.Text>
             </c.Button>
           </Form>
         </c.Stack>
@@ -107,7 +107,7 @@ function SidebarLink({ to, icon, end, ...props }: SidebarLinkProps) {
           {...props}
         >
           <c.Center w="26px">{icon}</c.Center>
-          <c.Text ml={2} d={{ base: "none", md: "block" }}>
+          <c.Text ml={2} display={{ base: "none", md: "block" }}>
             {props.children}
           </c.Text>
         </c.Link>

@@ -1,5 +1,5 @@
 import * as c from "@chakra-ui/react"
-import { ActionFunction, redirect } from "@remix-run/node"
+import { ActionArgs, redirect } from "@remix-run/node"
 import { Link, useParams, useTransition } from "@remix-run/react"
 import { z } from "zod"
 
@@ -8,7 +8,7 @@ import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
 import { resetPassword } from "~/services/auth/auth.server"
 
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: ActionArgs) => {
   const formData = await request.formData()
   const resetPasswordSchema = z.object({
     token: z.string(),
@@ -38,7 +38,7 @@ export default function ResetPassword() {
             <FormField isRequired label="Password" name="password" type="password" placeholder="********" />
             <FormError />
             <c.Button
-              isFullWidth
+              w="100%"
               colorScheme="purple"
               type="submit"
               isDisabled={isSubmitting}

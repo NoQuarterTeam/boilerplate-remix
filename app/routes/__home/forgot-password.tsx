@@ -43,7 +43,7 @@ export default function ForgotPassword() {
             <FormField isRequired label="Email address" name="email" placeholder="jim@gmail.com" />
             <FormError />
             <c.Button
-              isFullWidth
+              w="100%"
               colorScheme="purple"
               type="submit"
               isDisabled={isSubmitting}

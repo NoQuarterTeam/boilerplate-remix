@@ -1,13 +1,5 @@
 import { Prisma } from "@prisma/client"
 
-export function getOrderByParams(request: Request, defaultOrder?: { [key: string]: Prisma.SortOrder }) {
-  const url = new URL(request.url)
-  const orderBy = url.searchParams.get("orderBy") || undefined
-  const order = url.searchParams.get("order") || undefined
-  if (!orderBy || !order) return defaultOrder
-  return getOrderBy(orderBy, order)
-}
-
 // Sometimes we have table thats using nested data, and so the sortKey needs to be nested
 // e.g { user: { createdAt: "desc" } }, instead of just { createdAt: "desc" }
 // so this function allows us to pass "user.createdAt" as the sortKey
@@ -22,6 +14,19 @@ export function getOrderBy(orderBy: string, order: string) {
   }
   object[arr[arr.length - 1]] = order
   return result
+}
+
+export type DefaultOrder = { orderBy: string; order: Prisma.SortOrder }
+
+export function getOrderByParams(request: Request, defaultOrder?: DefaultOrder) {
+  const url = new URL(request.url)
+  const orderBy = url.searchParams.get("orderBy") || undefined
+  const order = url.searchParams.get("order") || undefined
+  if (!orderBy && !order && defaultOrder) {
+    return getOrderBy(defaultOrder.orderBy, defaultOrder.order)
+  }
+  if (!orderBy || !order) return undefined
+  return getOrderBy(orderBy, order)
 }
 
 export function getPaginationParams(request: Request, take?: number) {
@@ -44,11 +49,7 @@ export type TableParams = {
   orderBy?: { [key: string]: Prisma.SortOrder }
 }
 
-export function getTableParams(
-  request: Request,
-  take?: number,
-  defaultOrder?: { [key: string]: Prisma.SortOrder },
-) {
+export function getTableParams(request: Request, take?: number, defaultOrder?: DefaultOrder) {
   const pagination = getPaginationParams(request, take)
   const orderBy = getOrderByParams(request, defaultOrder)
   const search = getSearchParams(request)

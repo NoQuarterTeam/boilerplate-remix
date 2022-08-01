@@ -120,7 +120,7 @@ export default function AdminIndex() {
           <Column<User>
             sortKey="email"
             header="Email"
-            d={{ base: "none", md: "flex" }}
+            display={{ base: "none", md: "flex" }}
             row={(user) => user.email}
           />
           <Column<User>

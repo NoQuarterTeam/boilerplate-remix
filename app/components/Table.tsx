@@ -1,5 +1,6 @@
 import * as React from "react"
 import { CgArrowLongDown, CgArrowLongUp } from "react-icons/cg"
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons"
 import * as c from "@chakra-ui/react"
 import { Prisma } from "@prisma/client"
 import { Link as RLink, useSearchParams } from "@remix-run/react"
@@ -17,9 +18,10 @@ interface Props<T extends DataType> {
     | ArrayLike<React.ReactElement<ColumnProps<T>> | undefined>
     | React.ReactElement<ColumnProps<T>>
     | undefined
-  count?: number
-  take?: number
+  count: number
+  take: number
   data?: T[]
+  defaultOrder?: Sort
   getRowHref?: (item: T) => string
   noDataText?: string
 }
@@ -28,8 +30,8 @@ export function Table<T extends DataType>(props: Props<T>) {
   const borderColor = c.useColorModeValue("gray.200", "gray.700")
 
   const [params, setParams] = useSearchParams()
-  const orderBy = params.get("orderBy") as string | undefined
-  const order = params.get("order") as Prisma.SortOrder | undefined
+  const orderBy = (params.get("orderBy") as string | undefined) || props.defaultOrder?.orderBy
+  const order = (params.get("order") as Prisma.SortOrder | undefined) || props.defaultOrder?.order
 
   const handleSort = (order: Sort) => {
     const existingParams = Object.fromEntries(params)
@@ -125,7 +127,7 @@ export function Table<T extends DataType>(props: Props<T>) {
               {props.count} {props.count === 1 ? "item" : "items"}
             </c.Text>
 
-            <Pagination count={props.count} take={props.take} />
+            <Pagination count={props.count} pageSize={props.take} />
           </c.Flex>
         </c.Flex>
       ) : (
@@ -158,9 +160,9 @@ function _ColumnField<T>({
     flex: 1,
     align: "center",
     h: "50px",
-    isTruncated: true,
     fontSize: "sm",
     justify: isLast ? "flex-end" : "flex-start",
+    display: "flex",
     overflowX: "auto",
     ...props,
   }
@@ -197,54 +199,125 @@ function Row(props: RowProps) {
   )
 }
 
-export interface PaginationProps {
-  count?: number
-  take?: number
+const range = (start: number, end: number) => {
+  const length = end - start + 1
+  return Array.from({ length }, (_, idx) => idx + start)
 }
 
-export const Pagination: React.FC<PaginationProps> = (props) => {
-  const numberOfPages = props.count ? Math.ceil(props.count / (props.take || 5)) : 0
+export const DOTS = -1
+export const usePagination = ({
+  count,
+  pageSize,
+  currentPage,
+}: {
+  count: number
+  pageSize: number
+  currentPage: number
+}) => {
+  const siblingCount = 1
+
+  const paginationRange = React.useMemo(() => {
+    const totalPageCount = Math.ceil(count / pageSize)
+    // Pages count is determined as siblingCount + firstPage + lastPage + currentPage + 2*DOTS
+    const totalPageNumbers = siblingCount + 5
+    /*
+      Case 1:
+      If the number of pages is less than the page numbers we want to show in our
+      paginationComponent, we return the range [1..totalPageCount]
+    */
+    if (totalPageNumbers >= totalPageCount) return range(1, totalPageCount)
+    /*
+    	Calculate left and right sibling index and make sure they are within range 1 and totalPageCount
+    */
+    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1)
+    const rightSiblingIndex = Math.min(currentPage + siblingCount, totalPageCount)
+    /*
+      We do not show dots just when there is just one page number to be inserted between the extremes of sibling and the page limits i.e 1 and totalPageCount. Hence we are using leftSiblingIndex > 2 and rightSiblingIndex < totalPageCount - 2
+    */
+    const shouldShowLeftDots = leftSiblingIndex > 2
+    const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2
+    const firstPageIndex = 1
+    const lastPageIndex = totalPageCount
+    /*
+    	Case 2: No left dots to show, but rights dots to be shown
+    */
+    if (!shouldShowLeftDots && shouldShowRightDots) {
+      const leftItemCount = 3 + 2 * siblingCount
+      const leftRange = range(1, leftItemCount)
+      return [...leftRange, DOTS, totalPageCount]
+    }
+    /*
+    	Case 3: No right dots to show, but left dots to be shown
+    */
+    if (shouldShowLeftDots && !shouldShowRightDots) {
+      const rightItemCount = 3 + 2 * siblingCount
+      const rightRange = range(totalPageCount - rightItemCount + 1, totalPageCount)
+      return [firstPageIndex, DOTS, ...rightRange]
+    }
+    /*
+    	Case 4: Both left and right dots to be shown
+    */
+    if (shouldShowLeftDots && shouldShowRightDots) {
+      const middleRange = range(leftSiblingIndex, rightSiblingIndex)
+      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
+    }
+    return []
+  }, [count, pageSize, siblingCount, currentPage])
+
+  return paginationRange
+}
+
+interface PaginationProps {
+  count: number
+  pageSize: number
+}
+
+function Pagination(props: PaginationProps) {
   const [params, setParams] = useSearchParams()
-  const currentPage = parseInt(params.get("page") || "1") as number
-  const handleSetPage = (page: number) => {
+  const currentPage = parseInt((params.get("page") || "1") as string)
+
+  const paginationRange = usePagination({ currentPage, ...props })
+
+  if (!currentPage || currentPage === 0 || paginationRange.length < 2) return null
+
+  const onPageChange = (page: number) => {
     const existingParams = Object.fromEntries(params)
     setParams({ ...existingParams, page: page.toString() })
   }
 
-  const pageArray = [...Array(numberOfPages)].map((_, i) => i)
+  const onNext = () => onPageChange(currentPage + 1)
+  const onPrevious = () => onPageChange(currentPage - 1)
+  const lastPage = paginationRange[paginationRange.length - 1]
   return (
     <c.HStack spacing={1}>
-      <c.Button
-        borderRadius="md"
-        size="sm"
-        variant="ghost"
-        isDisabled={currentPage <= 1 || props.count === 0}
-        onClick={() => handleSetPage(currentPage - 1)}
-      >
-        Prev
-      </c.Button>
-      {pageArray
-        // .slice(currentPage > 3 ? currentPage - 3 : 0, currentPage > 3 ? currentPage + 2 : props.take || 5)
-        .map((page) => (
+      <c.IconButton
+        size="xs"
+        isDisabled={currentPage === 1}
+        onClick={onPrevious}
+        icon={<c.Box as={ChevronLeftIcon} />}
+        aria-label="previous page"
+      />
+
+      {paginationRange.map((pageNumber) => {
+        if (pageNumber === DOTS) return <c.Box>&#8230;</c.Box>
+        return (
           <c.Button
-            borderRadius="md"
+            fontWeight={pageNumber === currentPage ? "bold" : "normal"}
             size="xs"
-            key={page}
-            variant={currentPage === page + 1 ? "solid" : "ghost"}
-            onClick={() => handleSetPage(page + 1)}
+            key={pageNumber}
+            onClick={() => onPageChange(pageNumber)}
           >
-            {page + 1}
+            {pageNumber}
           </c.Button>
-        ))}
-      <c.Button
-        borderRadius="md"
-        size="sm"
-        variant="ghost"
-        isDisabled={props.count === 0 || (!!props.count && props.count <= currentPage * (props.take || 5))}
-        onClick={() => handleSetPage(currentPage + 1)}
-      >
-        Next
-      </c.Button>
+        )
+      })}
+      <c.IconButton
+        isDisabled={currentPage === lastPage}
+        size="xs"
+        onClick={onNext}
+        icon={<c.Box as={ChevronRightIcon} />}
+        aria-label="next page"
+      />
     </c.HStack>
   )
 }

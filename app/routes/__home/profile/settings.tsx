@@ -12,7 +12,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react"
-import { ActionFunction, LoaderArgs, redirect } from "@remix-run/node"
+import { ActionArgs, LoaderArgs, redirect } from "@remix-run/node"
 import { Form } from "@remix-run/react"
 
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
@@ -23,7 +23,7 @@ export const loader = async ({ request }: LoaderArgs) => {
   await requireUser(request)
   return null
 }
-export const action: ActionFunction = async ({ request }) => {
+export const action = async ({ request }: ActionArgs) => {
   const user = await getCurrentUser(request)
   await db.user.delete({ where: { id: user.id } })
   return redirect("/")

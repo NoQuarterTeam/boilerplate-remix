@@ -1,5 +1,5 @@
 import * as c from "@chakra-ui/react"
-import { HeadersFunction, json, LoaderFunction } from "@remix-run/node"
+import { HeadersFunction, json, LoaderArgs } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 
 import { db } from "~/lib/db.server"
@@ -10,7 +10,7 @@ export const headers: HeadersFunction = () => {
   return { "Cache-Control": "max-age=300, s-maxage=3600" }
 }
 
-export const loader: LoaderFunction = async ({ params: { id } }) => {
+export const loader = async ({ params: { id } }: LoaderArgs) => {
   if (!id) throw badRequest("ID required")
   const post = await db.post.findUnique({
     where: { id },

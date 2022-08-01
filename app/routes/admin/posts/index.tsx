@@ -1,6 +1,6 @@
 import * as c from "@chakra-ui/react"
 import { Prisma } from "@prisma/client"
-import { json, LoaderArgs, LoaderFunction } from "@remix-run/node"
+import { json, LoaderArgs } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
 import { UseDataFunctionReturn } from "@remix-run/react/dist/components"
 import dayjs from "dayjs"
@@ -12,8 +12,12 @@ import { Tile } from "~/components/Tile"
 import { db } from "~/lib/db.server"
 import { getTableParams } from "~/lib/table"
 
-export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
-  const { search, ...tableParams } = getTableParams(request)
+const TAKE = 10
+
+const DEFAULT_ORDER = { orderBy: "createdAt", order: Prisma.SortOrder.desc }
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const { search, ...tableParams } = getTableParams(request, TAKE, DEFAULT_ORDER)
   const posts = await db.post.findMany({
     ...tableParams,
     where: search
@@ -54,7 +58,8 @@ export default function Posts() {
         <Table
           noDataText="No posts found"
           data={posts}
-          take={10}
+          defaultOrder={DEFAULT_ORDER}
+          take={TAKE}
           getRowHref={(post) => post.id}
           count={count}
         >

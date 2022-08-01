@@ -23,7 +23,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
   console.error("Boundary:", error)
   return (
     <Document>
-      <c.VStack h="100vh" justify="center">
+      <c.VStack h="100vh" justify="center" p={20}>
         <c.Heading>There was an error</c.Heading>
         <c.Text>{error.message}</c.Text>
         <hr />
@@ -50,7 +50,7 @@ export function CatchBoundary() {
 
   return (
     <Document>
-      <c.VStack h="100vh" justify="center">
+      <c.VStack h="100vh" justify="center" p={20}>
         <c.Heading>
           {caught.status}: {caught.statusText}
         </c.Heading>

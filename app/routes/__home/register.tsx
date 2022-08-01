@@ -48,7 +48,7 @@ export default function Register() {
               <c.Button
                 colorScheme="purple"
                 type="submit"
-                isFullWidth
+                w="100%"
                 isDisabled={isSubmitting}
                 isLoading={isSubmitting}
               >
