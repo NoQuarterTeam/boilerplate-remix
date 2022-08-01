@@ -29,11 +29,11 @@ export function getOrderByParams(request: Request, defaultOrder?: DefaultOrder) 
   return getOrderBy(orderBy, order)
 }
 
-export function getPaginationParams(request: Request, take?: number) {
+export function getPaginationParams(request: Request, defaultTake?: number) {
   const url = new URL(request.url)
   const page = parseInt(url.searchParams.get("page") || "1") || 1
-  const customTake = take || 10
-  const skip = (page - 1) * customTake
+  const take = defaultTake || 10
+  const skip = (page - 1) * take
   return { skip, take }
 }
 export function getSearchParams(request: Request) {
@@ -49,8 +49,8 @@ export type TableParams = {
   orderBy?: { [key: string]: Prisma.SortOrder }
 }
 
-export function getTableParams(request: Request, take?: number, defaultOrder?: DefaultOrder) {
-  const pagination = getPaginationParams(request, take)
+export function getTableParams(request: Request, defaultTake?: number, defaultOrder?: DefaultOrder) {
+  const pagination = getPaginationParams(request, defaultTake)
   const orderBy = getOrderByParams(request, defaultOrder)
   const search = getSearchParams(request)
   return { ...pagination, search, orderBy }
