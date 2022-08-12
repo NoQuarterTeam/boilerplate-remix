@@ -50,7 +50,7 @@
     "bcrypt": "5.0.1",
     "compression": "1.7.4",
     "cross-env": "7.0.3",
-    "dayjs": "1.11.4",
+    "dayjs": "1.11.5",
     "dotenv": "16.0.1",
     "framer-motion": "7.1.0",
     "handlebars": "4.7.7",
