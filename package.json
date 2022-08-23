@@ -35,7 +35,7 @@
   "dependencies": {
     "@chakra-ui/icons": "2.0.8",
     "@chakra-ui/react": "2.2.8",
-    "@emotion/cache": "11.10.2",
+    "@emotion/cache": "11.10.3",
     "@emotion/react": "11.10.0",
     "@emotion/server": "11.10.0",
     "@emotion/styled": "11.10.0",
