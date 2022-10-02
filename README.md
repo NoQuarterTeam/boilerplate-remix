@@ -6,16 +6,16 @@ Comes with user authentication included
 
 - [React](https://github.com/facebook/react)
 - [Prisma](https://www.prisma.io)
-- Remix
-- TypeScript
-- Postgres
-- Chakra UI
-- Customizable theme & Dark mode
-- Eslint
-- Prettier
+- [Remix](https://github.com/remix-run/remix)
+- [TypeScript](https://github.com/microsoft/TypeScript)
+- [Postgres](https://github.com/postgres/postgres)
+- [Chakra UI](https://github.com/chakra-ui/chakra-ui)
+- [Eslint](https://github.com/eslint/eslint)
+- [Prettier](https://github.com/prettier/prettier)
+- [Husky](https://github.com/typicode/husky)
+- [Lint staged](https://github.com/okonet/lint-staged)
 - Sendgrid SMTP
-- Husky
-- Lint staged
+- Customizable theme & Dark mode
 
 & many more tasty treats
 
