@@ -79,7 +79,7 @@
     "@types/react-dom": "18.0.10",
     "@typescript-eslint/eslint-plugin": "5.48.1",
     "@typescript-eslint/parser": "5.48.1",
-    "esbuild": "0.16.17",
+    "esbuild": "0.17.0",
     "esbuild-register": "3.4.2",
     "eslint": "8.31.0",
     "eslint-config-prettier": "8.6.0",
