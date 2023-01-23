@@ -71,7 +71,7 @@
     "@remix-run/eslint-config": "1.11.1",
     "@types/bcrypt": "5.0.0",
     "@types/compression": "1.7.2",
-    "@types/express": "4.17.15",
+    "@types/express": "4.17.16",
     "@types/jsonwebtoken": "9.0.1",
     "@types/morgan": "1.9.4",
     "@types/nodemailer": "6.4.7",
