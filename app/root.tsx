@@ -65,7 +65,7 @@ interface DocumentProps {
 }
 
 const Document = withEmotionCache(({ children }: DocumentProps, emotionCache) => {
-  const serverSyleData = React.useContext(ServerStyleContext)
+  const serverStyleData = React.useContext(ServerStyleContext)
   const clientStyleData = React.useContext(ClientStyleContext)
 
   // Only executed on client
@@ -95,7 +95,7 @@ const Document = withEmotionCache(({ children }: DocumentProps, emotionCache) =>
         />
         <Meta />
         <Links />
-        {serverSyleData?.map(({ key, ids, css }) => (
+        {serverStyleData?.map(({ key, ids, css }) => (
           <style
             key={key}
             data-emotion={`${key} ${ids.join(" ")}`}
