@@ -65,8 +65,8 @@
     "zod": "3.20.6"
   },
   "devDependencies": {
-    "@commitlint/cli": "17.4.3",
-    "@commitlint/config-conventional": "17.4.3",
+    "@commitlint/cli": "17.4.4",
+    "@commitlint/config-conventional": "17.4.4",
     "@remix-run/dev": "1.13.0",
     "@remix-run/eslint-config": "1.13.0",
     "@types/bcrypt": "5.0.0",
