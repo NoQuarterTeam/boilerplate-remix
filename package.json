@@ -62,7 +62,7 @@
     "react-dom": "18.2.0",
     "react-dropzone": "14.2.3",
     "react-icons": "4.8.0",
-    "zod": "3.20.6"
+    "zod": "3.21.0"
   },
   "devDependencies": {
     "@commitlint/cli": "17.4.4",
