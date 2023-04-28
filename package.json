@@ -35,10 +35,10 @@
   "dependencies": {
     "@chakra-ui/icons": "2.0.19",
     "@chakra-ui/react": "2.6.0",
-    "@emotion/cache": "11.10.7",
-    "@emotion/react": "11.10.6",
+    "@emotion/cache": "11.10.8",
+    "@emotion/react": "11.10.8",
     "@emotion/server": "11.10.0",
-    "@emotion/styled": "11.10.6",
+    "@emotion/styled": "11.10.8",
     "@prisma/client": "4.13.0",
     "@remix-run/express": "1.15.0",
     "@remix-run/node": "1.15.0",
