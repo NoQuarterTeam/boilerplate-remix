@@ -36,7 +36,7 @@
     "@chakra-ui/icons": "2.0.19",
     "@chakra-ui/react": "2.7.0",
     "@emotion/cache": "11.11.0",
-    "@emotion/react": "11.11.0",
+    "@emotion/react": "11.11.1",
     "@emotion/server": "11.11.0",
     "@emotion/styled": "11.11.0",
     "@prisma/client": "4.15.0",
