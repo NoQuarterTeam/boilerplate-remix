@@ -57,7 +57,7 @@
     "jsonwebtoken": "9.0.0",
     "morgan": "1.10.0",
     "nodemailer": "6.9.3",
-    "prisma": "4.15.0",
+    "prisma": "4.16.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-dropzone": "14.2.3",
