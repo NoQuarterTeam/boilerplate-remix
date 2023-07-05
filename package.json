@@ -54,7 +54,7 @@
     "dotenv": "16.3.1",
     "framer-motion": "7.10.3",
     "handlebars": "4.7.7",
-    "jsonwebtoken": "9.0.0",
+    "jsonwebtoken": "9.0.1",
     "morgan": "1.10.0",
     "nodemailer": "6.9.3",
     "prisma": "4.16.2",
