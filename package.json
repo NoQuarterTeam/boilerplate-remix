@@ -82,7 +82,7 @@
     "esbuild": "0.18.17",
     "esbuild-register": "3.4.2",
     "eslint": "8.46.0",
-    "eslint-config-prettier": "8.9.0",
+    "eslint-config-prettier": "8.10.0",
     "eslint-plugin-import": "2.28.0",
     "eslint-plugin-simple-import-sort": "9.0.0",
     "husky": "8.0.3",
