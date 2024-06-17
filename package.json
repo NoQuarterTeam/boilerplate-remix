@@ -81,7 +81,7 @@
     "@typescript-eslint/parser": "5.62.0",
     "esbuild": "0.21.5",
     "esbuild-register": "3.5.0",
-    "eslint": "8.56.0",
+    "eslint": "8.57.0",
     "eslint-config-prettier": "8.10.0",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-simple-import-sort": "9.0.0",
