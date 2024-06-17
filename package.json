@@ -51,7 +51,7 @@
     "compression": "1.7.4",
     "cross-env": "7.0.3",
     "dayjs": "1.11.11",
-    "dotenv": "16.4.0",
+    "dotenv": "16.4.5",
     "framer-motion": "7.10.3",
     "handlebars": "4.7.8",
     "jsonwebtoken": "9.0.2",
